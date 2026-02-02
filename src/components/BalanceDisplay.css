@@ -1,9 +1,13 @@
 .balance-card {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    border-radius: 16px;
+    background: #161b22;
+    border-radius: 12px;
     padding: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid #30363d;
+    transition: border-color 0.2s ease;
+}
+
+.balance-card:hover {
+    border-color: #484f58;
 }
 
 .balance-header {
@@ -14,31 +18,41 @@
 }
 
 .balance-icon {
-    font-size: 24px;
+    font-size: 20px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(78, 205, 196, 0.15);
+    border-radius: 10px;
 }
 
 .balance-header h3 {
     margin: 0;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
-    color: #ffffff;
+    color: #e6edf3;
     flex-grow: 1;
 }
 
 .refresh-btn {
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
+    background: #21262d;
+    border: 1px solid #30363d;
     border-radius: 8px;
     width: 36px;
     height: 36px;
     cursor: pointer;
-    font-size: 16px;
-    transition: all 0.3s ease;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .refresh-btn:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.2);
-    transform: rotate(180deg);
+    background: #30363d;
+    border-color: #484f58;
 }
 
 .refresh-btn:disabled {
@@ -50,17 +64,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    color: #888;
+    padding: 24px;
+    color: #7d8590;
 }
 
 .spinner {
-    width: 32px;
-    height: 32px;
-    border: 3px solid rgba(255, 255, 255, 0.1);
-    border-top-color: #667eea;
+    width: 28px;
+    height: 28px;
+    border: 2px solid #21262d;
+    border-top-color: #4ecdc4;
     border-radius: 50%;
-    animation: spin 1s linear infinite;
+    animation: spin 0.8s linear infinite;
     margin-bottom: 12px;
 }
 
@@ -71,12 +85,12 @@
 }
 
 .balance-error {
-    color: #ff5252;
+    color: #ff6b6b;
     font-size: 14px;
-    padding: 12px;
-    background: rgba(255, 82, 82, 0.1);
+    padding: 12px 14px;
+    background: rgba(255, 107, 107, 0.1);
     border-radius: 8px;
-    border: 1px solid rgba(255, 82, 82, 0.3);
+    border: 1px solid rgba(255, 107, 107, 0.2);
     margin: 0;
 }
 
@@ -84,35 +98,36 @@
     display: flex;
     align-items: baseline;
     justify-content: center;
-    gap: 12px;
-    padding: 20px 0;
+    gap: 10px;
+    padding: 16px 0;
 }
 
 .amount {
-    font-size: 42px;
+    font-size: 44px;
     font-weight: 700;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #4ecdc4;
+    letter-spacing: -1px;
 }
 
 .currency {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
-    color: #888;
+    color: #7d8590;
 }
 
 .balance-hint {
     text-align: center;
     font-size: 13px;
-    color: #666;
-    margin: 16px 0 0;
+    color: #484f58;
+    margin: 12px 0 0;
+    padding-top: 16px;
+    border-top: 1px solid #21262d;
 }
 
 .balance-hint a {
-    color: #667eea;
+    color: #4ecdc4;
     text-decoration: none;
+    font-weight: 500;
 }
 
 .balance-hint a:hover {

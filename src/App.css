@@ -6,15 +6,19 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #0f0f1a 100%);
+  background: #0d1117;
   min-height: 100vh;
-  color: #ffffff;
+  color: #e6edf3;
 }
 
 .app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background:
+    radial-gradient(ellipse at top left, rgba(255, 107, 107, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(78, 205, 196, 0.08) 0%, transparent 50%),
+    #0d1117;
 }
 
 .app-header {
@@ -26,15 +30,18 @@ body {
   font-size: 42px;
   font-weight: 700;
   margin-bottom: 8px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.app-header h1::before {
+  content: '✦ ';
+  color: #ff6b6b;
 }
 
 .app-header p {
-  font-size: 18px;
-  color: #888;
+  font-size: 16px;
+  color: #7d8590;
   font-weight: 400;
 }
 
@@ -49,19 +56,21 @@ body {
 .card-grid {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
 
 .app-footer {
   text-align: center;
   padding: 24px;
-  color: #555;
+  color: #484f58;
   font-size: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .app-footer a {
-  color: #667eea;
+  color: #4ecdc4;
   text-decoration: none;
+  font-weight: 500;
 }
 
 .app-footer a:hover {

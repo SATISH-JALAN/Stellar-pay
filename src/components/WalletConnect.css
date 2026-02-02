@@ -1,14 +1,18 @@
 .wallet-card {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  border-radius: 16px;
+  background: #161b22;
+  border-radius: 12px;
   padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid #30363d;
+  transition: border-color 0.2s ease;
+}
+
+.wallet-card:hover {
+  border-color: #484f58;
 }
 
 .wallet-connected {
-  border-color: rgba(76, 175, 80, 0.3);
-  background: linear-gradient(135deg, #1a2e1a 0%, #162e21 100%);
+  border-color: rgba(78, 205, 196, 0.4);
+  background: linear-gradient(135deg, #161b22 0%, #0d1a18 100%);
 }
 
 .wallet-header {
@@ -19,25 +23,33 @@
 }
 
 .wallet-icon {
-  font-size: 24px;
+  font-size: 20px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 107, 107, 0.15);
+  border-radius: 10px;
 }
 
 .wallet-header h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
-  color: #ffffff;
+  color: #e6edf3;
   flex-grow: 1;
 }
 
 .network-badge {
-  background: rgba(255, 193, 7, 0.2);
-  color: #ffc107;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
+  background: rgba(255, 193, 7, 0.15);
+  color: #f0c000;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .wallet-info {
@@ -45,65 +57,72 @@
 }
 
 .public-key {
-  font-family: 'Courier New', monospace;
-  font-size: 14px;
-  color: #b0b0b0;
-  background: rgba(0, 0, 0, 0.3);
-  padding: 12px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 13px;
+  color: #7d8590;
+  background: #0d1117;
+  padding: 12px 14px;
   border-radius: 8px;
   margin: 0;
   word-break: break-all;
+  border: 1px solid #21262d;
 }
 
 .wallet-description {
-  color: #888;
+  color: #7d8590;
   font-size: 14px;
   margin-bottom: 20px;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .error-message {
-  color: #ff5252;
+  color: #ff6b6b;
   font-size: 14px;
   margin-bottom: 16px;
-  padding: 12px;
-  background: rgba(255, 82, 82, 0.1);
+  padding: 12px 14px;
+  background: rgba(255, 107, 107, 0.1);
   border-radius: 8px;
-  border: 1px solid rgba(255, 82, 82, 0.3);
+  border: 1px solid rgba(255, 107, 107, 0.2);
 }
 
 .btn {
   width: 100%;
-  padding: 14px 24px;
+  padding: 12px 20px;
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 8px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .btn:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .btn-connect {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: #ff6b6b;
+  color: #ffffff;
 }
 
 .btn-connect:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+  background: #ff5252;
+  transform: translateY(-1px);
+}
+
+.btn-connect:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .btn-disconnect {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ff5252;
-  border: 1px solid rgba(255, 82, 82, 0.3);
+  background: transparent;
+  color: #7d8590;
+  border: 1px solid #30363d;
 }
 
 .btn-disconnect:hover {
-  background: rgba(255, 82, 82, 0.2);
+  background: rgba(255, 107, 107, 0.1);
+  border-color: rgba(255, 107, 107, 0.3);
+  color: #ff6b6b;
 }

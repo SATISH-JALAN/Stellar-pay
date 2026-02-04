@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import {
   isConnected,
   requestAccess,
@@ -20,6 +20,41 @@ export const useWallet = () => {
     error: null,
     network: null,
   });
+
+  // Auto-reconnect on mount if previously connected
+  useEffect(() => {
+    const checkExistingConnection = async () => {
+      try {
+        // Check if Freighter is installed and connected
+        const connectionResult = await isConnected();
+        if (!connectionResult?.isConnected) {
+          return;
+        }
+
+        // Try to get the address without requesting access
+        // This works if user already granted permission
+        const addressResult = await getAddress();
+        if (addressResult.error || !addressResult.address) {
+          return;
+        }
+
+        // Get network info
+        const networkResult = await getNetwork();
+
+        setState({
+          publicKey: addressResult.address,
+          isConnecting: false,
+          error: null,
+          network: networkResult.network || 'TESTNET',
+        });
+      } catch (error) {
+        // Silent fail - user will need to connect manually
+        console.log('Auto-connect failed, user will need to connect manually');
+      }
+    };
+
+    checkExistingConnection();
+  }, []);
 
   const connect = useCallback(async () => {
     setState((prev) => ({ ...prev, isConnecting: true, error: null }));

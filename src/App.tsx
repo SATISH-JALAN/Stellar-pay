@@ -119,16 +119,6 @@ function App() {
         error={txError}
         onClose={closeTxStatus}
       />
-
-      <footer className="app-footer">
-        <p>
-          Built for{' '}
-          <a href="https://stellar.org" target="_blank" rel="noopener noreferrer">
-            Stellar
-          </a>{' '}
-          White Belt Challenge
-        </p>
-      </footer>
     </div>
   );
 }

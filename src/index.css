@@ -2,21 +2,47 @@
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color-scheme: dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
 
-  /* Color palette */
+/* Dark Theme (default) */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
   --color-bg: #0d1117;
   --color-surface: #161b22;
+  --color-surface-hover: #1c2128;
   --color-border: #30363d;
+  --color-border-hover: #484f58;
   --color-text: #e6edf3;
   --color-text-muted: #7d8590;
+  --color-text-faint: #484f58;
   --color-accent-coral: #ff6b6b;
   --color-accent-teal: #4ecdc4;
   --color-accent-gold: #ffd166;
+  --color-error: #ff6b6b;
+  --color-success: #4ecdc4;
+}
+
+/* Light Theme */
+[data-theme="light"] {
+  color-scheme: light;
+  --color-bg: #ffffff;
+  --color-surface: #f6f8fa;
+  --color-surface-hover: #eaeef2;
+  --color-border: #d0d7de;
+  --color-border-hover: #afb8c1;
+  --color-text: #1f2328;
+  --color-text-muted: #656d76;
+  --color-text-faint: #afb8c1;
+  --color-accent-coral: #cf222e;
+  --color-accent-teal: #1a7f7a;
+  --color-accent-gold: #bf8700;
+  --color-error: #cf222e;
+  --color-success: #1a7f7a;
 }
 
 body {
@@ -25,6 +51,7 @@ body {
   min-height: 100vh;
   background: var(--color-bg);
   color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #root {
@@ -41,7 +68,7 @@ a {
 }
 
 a:hover {
-  color: #3dbdb5;
+  opacity: 0.8;
 }
 
 /* Custom scrollbar */
@@ -59,5 +86,5 @@ a:hover {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #484f58;
+  background: var(--color-border-hover);
 }

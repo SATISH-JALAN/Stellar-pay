@@ -1,13 +1,13 @@
 .send-card {
-    background: #161b22;
+    background: var(--color-surface);
     border-radius: 12px;
     padding: 24px;
-    border: 1px solid #30363d;
-    transition: border-color 0.2s ease;
+    border: 1px solid var(--color-border);
+    transition: border-color 0.2s ease, background-color 0.3s ease;
 }
 
 .send-card:hover {
-    border-color: #484f58;
+    border-color: var(--color-border-hover);
 }
 
 .send-header {
@@ -32,7 +32,7 @@
     margin: 0;
     font-size: 16px;
     font-weight: 600;
-    color: #e6edf3;
+    color: var(--color-text);
 }
 
 .form-group {
@@ -43,34 +43,34 @@
     display: block;
     font-size: 13px;
     font-weight: 500;
-    color: #7d8590;
+    color: var(--color-text-muted);
     margin-bottom: 8px;
 }
 
 .form-group input {
     width: 100%;
     padding: 12px 14px;
-    background: #0d1117;
-    border: 1px solid #30363d;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
     border-radius: 8px;
-    color: #e6edf3;
+    color: var(--color-text);
     font-size: 14px;
     transition: all 0.2s ease;
     box-sizing: border-box;
 }
 
 .form-group input::placeholder {
-    color: #484f58;
+    color: var(--color-text-faint);
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: #4ecdc4;
+    border-color: var(--color-accent-teal);
     box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.15);
 }
 
 .form-group input.error {
-    border-color: #ff6b6b;
+    border-color: var(--color-error);
 }
 
 .form-group input:disabled {
@@ -80,7 +80,7 @@
 
 .error-text {
     display: block;
-    color: #ff6b6b;
+    color: var(--color-error);
     font-size: 12px;
     margin-top: 6px;
 }
@@ -96,10 +96,10 @@
 
 .max-btn {
     padding: 0 14px;
-    background: #21262d;
-    border: 1px solid #30363d;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
     border-radius: 8px;
-    color: #7d8590;
+    color: var(--color-text-muted);
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
@@ -108,8 +108,8 @@
 }
 
 .max-btn:hover:not(:disabled) {
-    background: #30363d;
-    color: #e6edf3;
+    background: var(--color-border);
+    color: var(--color-text);
 }
 
 .max-btn:disabled {
@@ -120,10 +120,10 @@
 .btn-send {
     width: 100%;
     padding: 14px 20px;
-    background: #4ecdc4;
+    background: var(--color-accent-teal);
     border: none;
     border-radius: 8px;
-    color: #0d1117;
+    color: #ffffff;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -132,7 +132,7 @@
 }
 
 .btn-send:hover:not(:disabled) {
-    background: #3dbdb5;
+    opacity: 0.9;
     transform: translateY(-1px);
 }
 

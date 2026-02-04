@@ -5,6 +5,7 @@ import { WalletConnect } from './components/WalletConnect';
 import { BalanceDisplay } from './components/BalanceDisplay';
 import { SendPayment } from './components/SendPayment';
 import { TransactionStatus } from './components/TransactionStatus';
+import { ThemeToggle } from './components/ThemeToggle';
 import {
   getBalance,
   createPaymentTransaction,
@@ -84,6 +85,7 @@ function App() {
 
   return (
     <div className="app">
+      <ThemeToggle />
       <header className="app-header">
         <h1>🚀 Stellar Pay</h1>
         <p>Send XLM on Stellar Testnet</p>

@@ -1,13 +1,13 @@
 .balance-card {
-    background: #161b22;
+    background: var(--color-surface);
     border-radius: 12px;
     padding: 24px;
-    border: 1px solid #30363d;
-    transition: border-color 0.2s ease;
+    border: 1px solid var(--color-border);
+    transition: border-color 0.2s ease, background-color 0.3s ease;
 }
 
 .balance-card:hover {
-    border-color: #484f58;
+    border-color: var(--color-border-hover);
 }
 
 .balance-header {
@@ -32,13 +32,13 @@
     margin: 0;
     font-size: 16px;
     font-weight: 600;
-    color: #e6edf3;
+    color: var(--color-text);
     flex-grow: 1;
 }
 
 .refresh-btn {
-    background: #21262d;
-    border: 1px solid #30363d;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
     border-radius: 8px;
     width: 36px;
     height: 36px;
@@ -51,8 +51,7 @@
 }
 
 .refresh-btn:hover:not(:disabled) {
-    background: #30363d;
-    border-color: #484f58;
+    background: var(--color-border);
 }
 
 .refresh-btn:disabled {
@@ -65,14 +64,14 @@
     flex-direction: column;
     align-items: center;
     padding: 24px;
-    color: #7d8590;
+    color: var(--color-text-muted);
 }
 
 .spinner {
     width: 28px;
     height: 28px;
-    border: 2px solid #21262d;
-    border-top-color: #4ecdc4;
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-accent-teal);
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
     margin-bottom: 12px;
@@ -85,7 +84,7 @@
 }
 
 .balance-error {
-    color: #ff6b6b;
+    color: var(--color-error);
     font-size: 14px;
     padding: 12px 14px;
     background: rgba(255, 107, 107, 0.1);
@@ -105,27 +104,27 @@
 .amount {
     font-size: 44px;
     font-weight: 700;
-    color: #4ecdc4;
+    color: var(--color-accent-teal);
     letter-spacing: -1px;
 }
 
 .currency {
     font-size: 18px;
     font-weight: 600;
-    color: #7d8590;
+    color: var(--color-text-muted);
 }
 
 .balance-hint {
     text-align: center;
     font-size: 13px;
-    color: #484f58;
+    color: var(--color-text-faint);
     margin: 12px 0 0;
     padding-top: 16px;
-    border-top: 1px solid #21262d;
+    border-top: 1px solid var(--color-border);
 }
 
 .balance-hint a {
-    color: #4ecdc4;
+    color: var(--color-accent-teal);
     text-decoration: none;
     font-weight: 500;
 }

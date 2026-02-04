@@ -5,7 +5,7 @@
 }
 
 .main {
-  max-width: 460px;
+  max-width: 960px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -54,6 +54,26 @@
   background-clip: text;
 }
 
+/* Two-Column Dashboard Layout */
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.dashboard-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dashboard-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 /* Tablet - 768px */
 @media (max-width: 768px) {
   .app {
@@ -76,6 +96,10 @@
   .logo-pay {
     font-size: 26px;
     letter-spacing: 2px;
+  }
+
+  .dashboard {
+    grid-template-columns: 1fr;
   }
 }
 

@@ -8,6 +8,7 @@ import { BalanceDisplay } from './components/BalanceDisplay';
 import { SendPayment } from './components/SendPayment';
 import { TransactionStatus } from './components/TransactionStatus';
 import { ThemeToggle } from './components/ThemeToggle';
+import { TransactionHistory } from './components/TransactionHistory';
 import {
   getBalance,
   createPaymentTransaction,
@@ -150,24 +151,42 @@ function App() {
           </div>
         </header>
 
-        <WalletConnect
-          publicKey={wallet.publicKey}
-          isConnecting={wallet.isConnecting}
-          error={wallet.error}
-          network={wallet.network}
-          onConnect={wallet.connect}
-          onDisconnect={wallet.disconnect}
-        />
-
-        {wallet.publicKey && (
+        {wallet.publicKey ? (
           <>
-            <BalanceDisplay publicKey={wallet.publicKey} />
+            {/* Hero - Send Payment (Main Feature) */}
             <SendPayment
               balance={balance}
               onSend={handleSend}
               isLoading={isSending}
             />
+
+            {/* Dashboard Grid */}
+            <div className="dashboard">
+              <div className="dashboard-left">
+                <WalletConnect
+                  publicKey={wallet.publicKey}
+                  isConnecting={wallet.isConnecting}
+                  error={wallet.error}
+                  network={wallet.network}
+                  onConnect={wallet.connect}
+                  onDisconnect={wallet.disconnect}
+                />
+                <BalanceDisplay publicKey={wallet.publicKey} />
+              </div>
+              <div className="dashboard-right">
+                <TransactionHistory publicKey={wallet.publicKey} />
+              </div>
+            </div>
           </>
+        ) : (
+          <WalletConnect
+            publicKey={wallet.publicKey}
+            isConnecting={wallet.isConnecting}
+            error={wallet.error}
+            network={wallet.network}
+            onConnect={wallet.connect}
+            onDisconnect={wallet.disconnect}
+          />
         )}
       </main>
 

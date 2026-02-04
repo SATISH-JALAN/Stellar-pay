@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { gsap } from 'gsap';
 import { formatPublicKey } from '../utils/stellar';
 import './WalletConnect.css';
 
@@ -20,6 +21,50 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({
     onDisconnect,
 }) => {
     const [copied, setCopied] = useState(false);
+    const cardRef = useRef<HTMLDivElement>(null);
+    const connectBtnRef = useRef<HTMLButtonElement>(null);
+
+    // Initial animation
+    useEffect(() => {
+        if (cardRef.current) {
+            gsap.fromTo(
+                cardRef.current,
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }
+            );
+        }
+    }, []);
+
+    // Button hover animation
+    useEffect(() => {
+        const btn = connectBtnRef.current;
+        if (!btn) return;
+
+        const handleEnter = () => {
+            gsap.to(btn, { scale: 1.02, duration: 0.2, ease: 'power2.out' });
+        };
+        const handleLeave = () => {
+            gsap.to(btn, { scale: 1, duration: 0.2, ease: 'power2.out' });
+        };
+        const handleDown = () => {
+            gsap.to(btn, { scale: 0.98, duration: 0.1 });
+        };
+        const handleUp = () => {
+            gsap.to(btn, { scale: 1.02, duration: 0.15, ease: 'back.out(2)' });
+        };
+
+        btn.addEventListener('mouseenter', handleEnter);
+        btn.addEventListener('mouseleave', handleLeave);
+        btn.addEventListener('mousedown', handleDown);
+        btn.addEventListener('mouseup', handleUp);
+
+        return () => {
+            btn.removeEventListener('mouseenter', handleEnter);
+            btn.removeEventListener('mouseleave', handleLeave);
+            btn.removeEventListener('mousedown', handleDown);
+            btn.removeEventListener('mouseup', handleUp);
+        };
+    }, [publicKey]);
 
     const copyAddress = async () => {
         if (!publicKey) return;
@@ -27,6 +72,17 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({
         try {
             await navigator.clipboard.writeText(publicKey);
             setCopied(true);
+
+            // Animate the copy feedback
+            const toast = document.querySelector('.copied-toast');
+            if (toast) {
+                gsap.fromTo(
+                    toast,
+                    { opacity: 0, y: -10 },
+                    { opacity: 1, y: 0, duration: 0.3, ease: 'back.out(2)' }
+                );
+            }
+
             setTimeout(() => setCopied(false), 2000);
         } catch (err) {
             console.error('Failed to copy:', err);
@@ -35,7 +91,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({
 
     if (publicKey) {
         return (
-            <div className="wallet-card wallet-connected">
+            <div className="wallet-card wallet-connected" ref={cardRef}>
                 <div className="wallet-header">
                     <span className="wallet-icon">👛</span>
                     <h3>Wallet Connected</h3>
@@ -64,7 +120,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({
     }
 
     return (
-        <div className="wallet-card">
+        <div className="wallet-card" ref={cardRef}>
             <div className="wallet-header">
                 <span className="wallet-icon">👛</span>
                 <h3>Connect Wallet</h3>
@@ -74,6 +130,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({
             </p>
             {error && <p className="error-message">{error}</p>}
             <button
+                ref={connectBtnRef}
                 className="btn btn-connect"
                 onClick={onConnect}
                 disabled={isConnecting}

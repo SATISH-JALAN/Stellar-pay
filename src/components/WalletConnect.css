@@ -1,35 +1,61 @@
 .wallet-card {
   background: var(--color-surface);
-  border-radius: 12px;
-  padding: 24px;
   border: 1px solid var(--color-border);
-  transition: border-color 0.2s ease, background-color 0.3s ease;
+  border-radius: 4px;
+  padding: 24px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.wallet-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-accent-primary), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .wallet-card:hover {
   border-color: var(--color-border-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.wallet-card:hover::before {
+  opacity: 1;
 }
 
 .wallet-connected {
-  border-color: var(--color-success);
+  border-color: var(--color-accent-secondary);
+  background: linear-gradient(135deg, var(--color-surface) 0%, rgba(129, 178, 154, 0.08) 100%);
+}
+
+.wallet-connected::before {
+  background: linear-gradient(90deg, transparent, var(--color-accent-secondary), transparent);
+  opacity: 1;
 }
 
 .wallet-header {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .wallet-icon {
-  font-size: 20px;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 107, 107, 0.15);
-  border-radius: 10px;
+  background: linear-gradient(135deg, var(--color-accent-primary) 0%, var(--color-accent-warning) 100%);
+  border-radius: 2px;
+  font-size: 18px;
 }
 
 .wallet-header h3 {
@@ -41,10 +67,10 @@
 }
 
 .network-badge {
-  background: rgba(255, 193, 7, 0.15);
-  color: var(--color-accent-gold);
-  padding: 4px 10px;
-  border-radius: 6px;
+  background: rgba(242, 204, 143, 0.15);
+  color: var(--color-accent-warning);
+  padding: 4px 12px;
+  border-radius: 2px;
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
@@ -52,7 +78,7 @@
 }
 
 .wallet-info {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .address-row {
@@ -62,12 +88,12 @@
 }
 
 .public-key {
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: 'Space Mono', 'Fira Code', monospace;
   font-size: 13px;
   color: var(--color-text-muted);
   background: var(--color-bg);
-  padding: 12px 14px;
-  border-radius: 8px;
+  padding: 14px 16px;
+  border-radius: 2px;
   margin: 0;
   word-break: break-all;
   border: 1px solid var(--color-border);
@@ -75,10 +101,10 @@
 }
 
 .copy-btn {
-  background: var(--color-surface);
+  background: var(--color-bg);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 0 14px;
+  border-radius: 2px;
+  padding: 0 16px;
   cursor: pointer;
   font-size: 16px;
   transition: all 0.2s ease;
@@ -88,44 +114,45 @@
 }
 
 .copy-btn:hover {
-  background: var(--color-border);
+  background: var(--color-surface-hover);
+  border-color: var(--color-border-hover);
 }
 
 .copied-toast {
   display: block;
   text-align: center;
-  color: var(--color-success);
+  color: var(--color-accent-secondary);
   font-size: 12px;
   font-weight: 500;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .wallet-description {
   color: var(--color-text-muted);
   font-size: 14px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   line-height: 1.6;
 }
 
 .error-message {
-  color: var(--color-error);
+  color: var(--color-accent-error);
   font-size: 14px;
   margin-bottom: 16px;
-  padding: 12px 14px;
-  background: rgba(255, 107, 107, 0.1);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 107, 107, 0.2);
+  padding: 14px 16px;
+  background: rgba(212, 114, 106, 0.1);
+  border-radius: 2px;
+  border: 1px solid rgba(212, 114, 106, 0.2);
 }
 
 .btn {
   width: 100%;
-  padding: 12px 20px;
+  padding: 14px 24px;
   border: none;
-  border-radius: 8px;
+  border-radius: 2px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .btn:disabled {
@@ -134,13 +161,14 @@
 }
 
 .btn-connect {
-  background: var(--color-accent-coral);
-  color: #ffffff;
+  background: linear-gradient(135deg, var(--color-accent-primary) 0%, var(--color-accent-warning) 100%);
+  color: #18181f;
+  box-shadow: 0 4px 14px rgba(224, 122, 95, 0.35);
 }
 
 .btn-connect:hover:not(:disabled) {
-  opacity: 0.9;
-  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(224, 122, 95, 0.45);
+  transform: translateY(-2px);
 }
 
 .btn-connect:active:not(:disabled) {
@@ -154,7 +182,7 @@
 }
 
 .btn-disconnect:hover {
-  background: rgba(255, 107, 107, 0.1);
-  border-color: var(--color-error);
-  color: var(--color-error);
+  background: rgba(212, 114, 106, 0.1);
+  border-color: var(--color-accent-error);
+  color: var(--color-accent-error);
 }

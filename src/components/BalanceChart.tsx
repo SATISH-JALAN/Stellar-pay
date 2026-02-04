@@ -125,7 +125,7 @@ export const BalanceChart = ({ publicKey }: BalanceChartProps) => {
                     className="refresh-chart-btn"
                     onClick={fetchBalanceHistory}
                     disabled={isLoading}
-                    title="Refresh"
+                    title="Refresh Chart - Update balance history from blockchain"
                 >
                     🔄
                 </button>

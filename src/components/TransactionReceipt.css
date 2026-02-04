@@ -1,0 +1,218 @@
+.receipt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.receipt-modal {
+    background: var(--color-surface);
+    border-radius: 8px;
+    padding: 32px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    position: relative;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.receipt-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: 20px;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.receipt-close:hover {
+    background: var(--color-surface-hover);
+    color: var(--color-text);
+}
+
+.receipt-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.receipt-icon {
+    font-size: 28px;
+}
+
+.receipt-header h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.receipt-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px;
+    border-radius: 4px;
+    margin-bottom: 24px;
+    font-weight: 600;
+}
+
+.receipt-status.success {
+    background: rgba(129, 178, 154, 0.15);
+    color: var(--color-accent-secondary);
+}
+
+.status-icon {
+    font-size: 18px;
+}
+
+.receipt-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+    background: var(--color-bg);
+    border-radius: 4px;
+    margin-bottom: 24px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detail-label {
+    color: var(--color-text-muted);
+    font-size: 13px;
+}
+
+.detail-value {
+    color: var(--color-text);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.detail-value.amount {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-accent-secondary);
+}
+
+.detail-value.address {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+}
+
+.detail-value.hash {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--color-accent-primary);
+    text-decoration: none;
+}
+
+.detail-value.hash:hover {
+    text-decoration: underline;
+}
+
+.receipt-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.receipt-btn {
+    flex: 1;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.receipt-btn.download {
+    background: var(--color-accent-primary);
+    color: #18181f;
+}
+
+.receipt-btn.download:hover {
+    background: var(--color-accent-warning);
+}
+
+.receipt-btn.share {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+}
+
+.receipt-btn.share:hover {
+    background: var(--color-surface-hover);
+    border-color: var(--color-border-hover);
+}
+
+@media (max-width: 480px) {
+    .receipt-modal {
+        padding: 24px;
+    }
+
+    .receipt-header h3 {
+        font-size: 18px;
+    }
+
+    .receipt-details {
+        padding: 16px;
+        gap: 14px;
+    }
+
+    .receipt-actions {
+        flex-direction: column;
+    }
+}

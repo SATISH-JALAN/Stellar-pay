@@ -114,6 +114,65 @@ export const TransactionHistory = ({ publicKey }: TransactionHistoryProps) => {
         return `${address.slice(0, 6)}...${address.slice(-6)}`;
     };
 
+    const exportToPDF = async () => {
+        if (filteredTxs.length === 0) return;
+
+        // Dynamic import to reduce bundle size
+        const { default: jsPDF } = await import('jspdf');
+        const { default: autoTable } = await import('jspdf-autotable');
+
+        const doc = new jsPDF();
+
+        // Header
+        doc.setFontSize(20);
+        doc.setTextColor(224, 122, 95);
+        doc.text('Stellar Pay', 14, 20);
+
+        doc.setFontSize(14);
+        doc.setTextColor(100);
+        doc.text('Transaction History Report', 14, 30);
+
+        doc.setFontSize(10);
+        doc.setTextColor(150);
+        doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 38);
+        doc.text(`Total Transactions: ${filteredTxs.length}`, 14, 44);
+
+        // Table data
+        const tableData = filteredTxs.map(tx => [
+            tx.date.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            }),
+            tx.type.toUpperCase(),
+            `${tx.type === 'sent' ? '-' : '+'}${tx.amount} ${tx.asset}`,
+            `${tx.counterparty.slice(0, 12)}...${tx.counterparty.slice(-8)}`,
+        ]);
+
+        autoTable(doc, {
+            startY: 52,
+            head: [['Date', 'Type', 'Amount', 'Counterparty']],
+            body: tableData,
+            theme: 'striped',
+            headStyles: {
+                fillColor: [224, 122, 95],
+                textColor: [24, 24, 31],
+                fontStyle: 'bold',
+            },
+            alternateRowStyles: {
+                fillColor: [30, 30, 36],
+            },
+            styles: {
+                textColor: [200, 200, 200],
+                cellPadding: 4,
+            },
+        });
+
+        doc.save(`stellar-transactions-${new Date().toISOString().split('T')[0]}.pdf`);
+    };
+
     return (
         <div className="history-card">
             <div className="history-header">
@@ -121,14 +180,24 @@ export const TransactionHistory = ({ publicKey }: TransactionHistoryProps) => {
                     <span className="history-icon">📜</span>
                     <h3>Transaction History</h3>
                 </div>
-                <button
-                    className="refresh-history-btn"
-                    onClick={fetchTransactions}
-                    disabled={isLoading}
-                    title="Refresh"
-                >
-                    🔄
-                </button>
+                <div className="history-actions">
+                    <button
+                        className="export-btn"
+                        onClick={exportToPDF}
+                        disabled={filteredTxs.length === 0}
+                        title="Download PDF Report - Export your transaction history as a professional PDF document"
+                    >
+                        📄
+                    </button>
+                    <button
+                        className="refresh-history-btn"
+                        onClick={fetchTransactions}
+                        disabled={isLoading}
+                        title="Refresh Transactions - Fetch the latest transactions from the blockchain"
+                    >
+                        🔄
+                    </button>
+                </div>
             </div>
 
             {/* Search and Filter */}

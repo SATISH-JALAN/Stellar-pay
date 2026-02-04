@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { isValidPublicKey, formatPublicKey } from '../utils/stellar';
 import { AddressBook } from './AddressBook';
+import { RecentRecipients } from './RecentRecipients';
 import './SendPayment.css';
 
 interface SendPaymentProps {
@@ -72,6 +73,7 @@ export const SendPayment: React.FC<SendPaymentProps> = ({
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="destination">Destination Address</label>
+                        <RecentRecipients onSelectAddress={(addr) => setDestination(addr)} />
                         <AddressBook onSelectAddress={(addr) => setDestination(addr)} />
                         <input
                             type="text"

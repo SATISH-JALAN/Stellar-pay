@@ -102,7 +102,7 @@ export const AddressBook = ({ onSelectAddress }: AddressBookProps) => {
             <button
                 className="address-book-btn"
                 onClick={() => setIsOpen(!isOpen)}
-                title="Address Book"
+                title="Address Book - Save and manage your frequent recipients"
             >
                 📒 Address Book
             </button>

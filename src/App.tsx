@@ -10,6 +10,10 @@ import { TransactionStatus } from './components/TransactionStatus';
 import { ThemeToggle } from './components/ThemeToggle';
 import { TransactionHistory } from './components/TransactionHistory';
 import { BalanceChart } from './components/BalanceChart';
+import { PriceDisplay } from './components/PriceDisplay';
+import { FriendbotFund } from './components/FriendbotFund';
+import { TransactionReceipt } from './components/TransactionReceipt';
+import { saveRecentRecipient } from './components/RecentRecipients';
 import {
   getBalance,
   createPaymentTransaction,
@@ -25,6 +29,14 @@ function App() {
   const [txStatus, setTxStatus] = useState<'idle' | 'pending' | 'success' | 'error'>('idle');
   const [txHash, setTxHash] = useState<string | undefined>();
   const [txError, setTxError] = useState<string | undefined>();
+  const [lastTxDetails, setLastTxDetails] = useState<{
+    hash: string;
+    destination: string;
+    amount: string;
+    date: Date;
+    status: 'success' | 'error';
+  } | null>(null);
+  const [showReceipt, setShowReceipt] = useState(false);
 
   const mainRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
@@ -121,6 +133,20 @@ function App() {
       const result = await submitTransaction(signResult.signedTxXdr);
       setTxHash(result.hash);
       setTxStatus('success');
+
+      // Save to recent recipients
+      saveRecentRecipient(destination);
+
+      // Set up receipt
+      setLastTxDetails({
+        hash: result.hash,
+        destination,
+        amount,
+        date: new Date(),
+        status: 'success',
+      });
+      setShowReceipt(true);
+
       await fetchBalance();
     } catch (error) {
       console.error('Transaction failed:', error);
@@ -150,6 +176,7 @@ function App() {
               <span className="logo-pay">PAY</span>
             </span>
           </div>
+          <PriceDisplay />
         </header>
 
         {wallet.publicKey ? (
@@ -173,9 +200,10 @@ function App() {
                   onDisconnect={wallet.disconnect}
                 />
                 <BalanceDisplay publicKey={wallet.publicKey} />
-                <BalanceChart publicKey={wallet.publicKey} />
+                <FriendbotFund publicKey={wallet.publicKey} onFunded={fetchBalance} />
               </div>
               <div className="dashboard-right">
+                <BalanceChart publicKey={wallet.publicKey} />
                 <TransactionHistory publicKey={wallet.publicKey} />
               </div>
             </div>
@@ -197,6 +225,12 @@ function App() {
         hash={txHash}
         error={txError}
         onClose={closeTxStatus}
+      />
+
+      <TransactionReceipt
+        isOpen={showReceipt}
+        onClose={() => setShowReceipt(false)}
+        transaction={lastTxDetails}
       />
     </div>
   );

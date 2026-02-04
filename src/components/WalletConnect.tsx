@@ -106,7 +106,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({
                         <button
                             className="copy-btn"
                             onClick={copyAddress}
-                            title="Copy address"
+                            title="Copy Address - Copy your Stellar address to clipboard"
                         >
                             {copied ? '✓' : '📋'}
                         </button>

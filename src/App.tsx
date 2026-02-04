@@ -9,6 +9,7 @@ import { SendPayment } from './components/SendPayment';
 import { TransactionStatus } from './components/TransactionStatus';
 import { ThemeToggle } from './components/ThemeToggle';
 import { TransactionHistory } from './components/TransactionHistory';
+import { BalanceChart } from './components/BalanceChart';
 import {
   getBalance,
   createPaymentTransaction,
@@ -172,6 +173,7 @@ function App() {
                   onDisconnect={wallet.disconnect}
                 />
                 <BalanceDisplay publicKey={wallet.publicKey} />
+                <BalanceChart publicKey={wallet.publicKey} />
               </div>
               <div className="dashboard-right">
                 <TransactionHistory publicKey={wallet.publicKey} />

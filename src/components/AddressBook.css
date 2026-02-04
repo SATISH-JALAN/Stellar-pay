@@ -1,0 +1,231 @@
+.address-book {
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.address-book-btn {
+    width: 100%;
+    padding: 10px 16px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    color: var(--color-text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.address-book-btn:hover {
+    background: var(--color-surface-hover);
+    border-color: var(--color-border-hover);
+    color: var(--color-text);
+}
+
+.address-book-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    margin-top: 8px;
+    z-index: 100;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.dropdown-header h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.add-contact-btn {
+    width: 28px;
+    height: 28px;
+    background: var(--color-accent-primary);
+    border: none;
+    border-radius: 2px;
+    color: #18181f;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.add-contact-btn:hover {
+    background: var(--color-accent-warning);
+}
+
+/* Add Contact Form */
+.add-contact-form {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-input {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    color: var(--color-text);
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.contact-input::placeholder {
+    color: var(--color-text-faint);
+}
+
+.contact-input:focus {
+    outline: none;
+    border-color: var(--color-accent-primary);
+}
+
+.contact-error {
+    color: var(--color-accent-error);
+    font-size: 12px;
+}
+
+.save-contact-btn {
+    padding: 10px 16px;
+    background: var(--color-accent-secondary);
+    border: none;
+    border-radius: 2px;
+    color: #18181f;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.save-contact-btn:hover {
+    background: var(--color-accent-success);
+}
+
+/* Contacts List */
+.contacts-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.contacts-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.contacts-list::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 2px;
+}
+
+.no-contacts {
+    padding: 24px;
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 13px;
+    margin: 0;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--color-border);
+    transition: background 0.2s ease;
+}
+
+.contact-item:last-child {
+    border-bottom: none;
+}
+
+.contact-item:hover {
+    background: var(--color-surface-hover);
+}
+
+.contact-info {
+    flex: 1;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.contact-nickname {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+.contact-address {
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    color: var(--color-text-muted);
+}
+
+.delete-contact-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+    padding: 4px;
+}
+
+.delete-contact-btn:hover {
+    opacity: 1;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .address-book-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .dropdown-header {
+        padding: 12px 14px;
+    }
+
+    .add-contact-form {
+        padding: 12px 14px;
+    }
+
+    .contact-item {
+        padding: 10px 14px;
+    }
+}

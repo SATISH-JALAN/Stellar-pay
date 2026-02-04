@@ -1,0 +1,165 @@
+.qr-btn {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    padding: 0 16px;
+    min-width: 48px;
+    min-height: 48px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.qr-btn:hover {
+    background: var(--color-surface-hover);
+    border-color: var(--color-border-hover);
+}
+
+/* QR Modal Overlay */
+.qr-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Modal Content */
+.qr-content {
+    background: var(--color-surface);
+    border-radius: 12px;
+    padding: 32px;
+    width: 100%;
+    max-width: 340px;
+    text-align: center;
+    border: 1px solid var(--color-border);
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    position: relative;
+}
+
+.qr-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: 20px;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.qr-close:hover {
+    background: var(--color-surface-hover);
+    border-color: var(--color-accent-error);
+    color: var(--color-accent-error);
+}
+
+.qr-content h4 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.qr-content p {
+    margin: 0 0 24px;
+    color: var(--color-text-muted);
+    font-size: 14px;
+}
+
+.qr-wrapper {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-bottom: 20px;
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.2),
+        inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.qr-wrapper svg {
+    display: block;
+}
+
+.qr-address {
+    background: var(--color-bg);
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+}
+
+.qr-address code {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--color-text-muted);
+    word-break: break-all;
+    line-height: 1.5;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .qr-btn {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0 12px;
+        font-size: 16px;
+    }
+
+    .qr-modal {
+        padding: 16px;
+    }
+
+    .qr-content {
+        padding: 24px 20px;
+        border-radius: 8px;
+    }
+
+    .qr-content h4 {
+        font-size: 18px;
+        padding-right: 32px;
+    }
+
+    .qr-content p {
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+    .qr-wrapper {
+        padding: 16px;
+        border-radius: 8px;
+    }
+
+    .qr-wrapper svg {
+        width: 160px !important;
+        height: 160px !important;
+    }
+
+    .qr-address code {
+        font-size: 9px;
+    }
+}

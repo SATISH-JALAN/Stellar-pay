@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { formatPublicKey } from '../utils/stellar';
+import { QRCodeDisplay } from './QRCode';
 import './WalletConnect.css';
 
 interface WalletConnectProps {
@@ -109,6 +110,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({
                         >
                             {copied ? '✓' : '📋'}
                         </button>
+                        <QRCodeDisplay address={publicKey} />
                     </div>
                     {copied && <span className="copied-toast">Copied!</span>}
                 </div>

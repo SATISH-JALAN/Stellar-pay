@@ -193,9 +193,35 @@
     color: var(--color-text);
 }
 
-.receipt-btn.share:hover {
+.receipt-btn.share:hover:not(:disabled) {
     background: var(--color-surface-hover);
     border-color: var(--color-border-hover);
+}
+
+.receipt-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Stellar Expert Button */
+.stellar-expert-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 14px 20px;
+    background: var(--color-accent-secondary);
+    color: #18181f;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-bottom: 16px;
+    transition: all 0.2s ease;
+}
+
+.stellar-expert-btn:hover {
+    background: var(--color-accent-success);
+    transform: translateY(-1px);
 }
 
 @media (max-width: 480px) {

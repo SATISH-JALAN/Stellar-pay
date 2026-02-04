@@ -132,12 +132,14 @@ function App() {
 
       const result = await submitTransaction(signResult.signedTxXdr);
       setTxHash(result.hash);
-      setTxStatus('success');
+
+      // Don't set txStatus to success - use receipt instead
+      setTxStatus('idle');
 
       // Save to recent recipients
       saveRecentRecipient(destination);
 
-      // Set up receipt
+      // Set up receipt (this handles success display)
       setLastTxDetails({
         hash: result.hash,
         destination,
@@ -220,12 +222,15 @@ function App() {
         )}
       </main>
 
-      <TransactionStatus
-        status={txStatus}
-        hash={txHash}
-        error={txError}
-        onClose={closeTxStatus}
-      />
+      {/* Only show TransactionStatus for pending/error, Receipt handles success */}
+      {!showReceipt && (
+        <TransactionStatus
+          status={txStatus}
+          hash={txHash}
+          error={txError}
+          onClose={closeTxStatus}
+        />
+      )}
 
       <TransactionReceipt
         isOpen={showReceipt}

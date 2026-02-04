@@ -88,17 +88,6 @@ export const BalanceDisplay: React.FC<BalanceDisplayProps> = ({ publicKey }) => 
                     <span className="currency">XLM</span>
                 </div>
             )}
-
-            <p className="balance-hint">
-                Need testnet XLM?{' '}
-                <a
-                    href={`https://friendbot.stellar.org/?addr=${publicKey}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Get free XLM from Friendbot
-                </a>
-            </p>
         </div>
     );
 };

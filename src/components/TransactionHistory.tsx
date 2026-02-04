@@ -25,6 +25,13 @@ export const TransactionHistory = ({ publicKey }: TransactionHistoryProps) => {
     const [error, setError] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [filterType, setFilterType] = useState<'all' | 'sent' | 'received'>('all');
+    const [showAll, setShowAll] = useState(false);
+
+    const INITIAL_DISPLAY_COUNT = 2;
+
+    // Get transactions to display
+    const displayedTxs = showAll ? filteredTxs : filteredTxs.slice(0, INITIAL_DISPLAY_COUNT);
+    const hasMoreTxs = filteredTxs.length > INITIAL_DISPLAY_COUNT;
 
     // Fetch transactions from Horizon
     const fetchTransactions = useCallback(async () => {
@@ -247,32 +254,57 @@ export const TransactionHistory = ({ publicKey }: TransactionHistoryProps) => {
                             : 'No transactions yet'}
                     </p>
                 ) : (
-                    filteredTxs.map((tx) => (
-                        <a
-                            key={tx.id}
-                            href={`https://stellar.expert/explorer/testnet/tx/${tx.hash}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="tx-item"
+                    <>
+                        <div
+                            className={`tx-items-container ${showAll ? 'expanded' : ''}`}
+                            data-lenis-prevent
                         >
-                            <div className="tx-icon-wrapper">
-                                <span className={`tx-type-icon ${tx.type}`}>
-                                    {tx.type === 'sent' ? '↑' : '↓'}
-                                </span>
-                            </div>
-                            <div className="tx-details">
-                                <span className="tx-counterparty">
-                                    {tx.type === 'sent' ? 'To: ' : 'From: '}
-                                    {formatAddress(tx.counterparty)}
-                                </span>
-                                <span className="tx-date">{formatDate(tx.date)}</span>
-                            </div>
-                            <div className={`tx-amount ${tx.type}`}>
-                                {tx.type === 'sent' ? '-' : '+'}
-                                {tx.amount} {tx.asset}
-                            </div>
-                        </a>
-                    ))
+                            {displayedTxs.map((tx) => (
+                                <a
+                                    key={tx.id}
+                                    href={`https://stellar.expert/explorer/testnet/tx/${tx.hash}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="tx-item"
+                                >
+                                    <div className="tx-icon-wrapper">
+                                        <span className={`tx-type-icon ${tx.type}`}>
+                                            {tx.type === 'sent' ? '↑' : '↓'}
+                                        </span>
+                                    </div>
+                                    <div className="tx-details">
+                                        <span className="tx-counterparty">
+                                            {tx.type === 'sent' ? 'To: ' : 'From: '}
+                                            {formatAddress(tx.counterparty)}
+                                        </span>
+                                        <span className="tx-date">{formatDate(tx.date)}</span>
+                                    </div>
+                                    <div className={`tx-amount ${tx.type}`}>
+                                        {tx.type === 'sent' ? '-' : '+'}
+                                        {tx.amount} {tx.asset}
+                                    </div>
+                                </a>
+                            ))}
+                        </div>
+                        {hasMoreTxs && (
+                            <button
+                                className="show-more-btn"
+                                onClick={() => setShowAll(!showAll)}
+                            >
+                                {showAll ? (
+                                    <>
+                                        <span>Show Less</span>
+                                        <span className="show-more-icon">↑</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span>Show More ({filteredTxs.length - INITIAL_DISPLAY_COUNT} more)</span>
+                                        <span className="show-more-icon">↓</span>
+                                    </>
+                                )}
+                            </button>
+                        )}
+                    </>
                 )}
             </div>
         </div>

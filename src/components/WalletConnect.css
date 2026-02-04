@@ -50,6 +50,7 @@
 .wallet-icon {
   width: 40px;
   height: 40px;
+  min-width: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,6 +106,8 @@
   border: 1px solid var(--color-border);
   border-radius: 2px;
   padding: 0 16px;
+  min-width: 48px;
+  min-height: 48px;
   cursor: pointer;
   font-size: 16px;
   transition: all 0.2s ease;
@@ -146,13 +149,16 @@
 
 .btn {
   width: 100%;
-  padding: 14px 24px;
+  padding: 16px 24px;
+  min-height: 52px;
   border: none;
   border-radius: 2px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .btn:disabled {
@@ -185,4 +191,99 @@
   background: rgba(212, 114, 106, 0.1);
   border-color: var(--color-accent-error);
   color: var(--color-accent-error);
+}
+
+/* Tablet - 768px */
+@media (max-width: 768px) {
+  .wallet-card {
+    padding: 20px;
+  }
+
+  .wallet-card:hover {
+    transform: none;
+  }
+
+  .wallet-header {
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .wallet-icon {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    font-size: 16px;
+  }
+
+  .wallet-header h3 {
+    font-size: 15px;
+  }
+
+  .network-badge {
+    padding: 3px 8px;
+    font-size: 10px;
+  }
+}
+
+/* Mobile - 480px */
+@media (max-width: 480px) {
+  .wallet-card {
+    padding: 16px;
+  }
+
+  .wallet-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .wallet-icon {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    font-size: 14px;
+  }
+
+  .wallet-header h3 {
+    font-size: 14px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .network-badge {
+    order: 3;
+    width: 100%;
+    text-align: center;
+    margin-top: 4px;
+  }
+
+  .wallet-info {
+    margin-bottom: 16px;
+  }
+
+  .public-key {
+    font-size: 11px;
+    padding: 12px;
+  }
+
+  .copy-btn {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 12px;
+  }
+
+  .wallet-description {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .error-message {
+    font-size: 13px;
+    padding: 12px;
+  }
+
+  .btn {
+    padding: 14px 20px;
+    min-height: 48px;
+    font-size: 14px;
+  }
 }

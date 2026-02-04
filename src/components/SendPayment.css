@@ -40,6 +40,7 @@
 .send-icon {
     width: 40px;
     height: 40px;
+    min-width: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -70,13 +71,15 @@
 .form-group input {
     width: 100%;
     padding: 14px 16px;
+    min-height: 48px;
     background: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: 2px;
     color: var(--color-text);
-    font-size: 14px;
+    font-size: 16px;
     transition: all 0.2s ease;
     box-sizing: border-box;
+    -webkit-appearance: none;
 }
 
 .form-group input::placeholder {
@@ -116,6 +119,8 @@
 
 .max-btn {
     padding: 0 16px;
+    min-height: 48px;
+    min-width: 60px;
     background: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: 2px;
@@ -125,6 +130,8 @@
     cursor: pointer;
     transition: all 0.2s ease;
     letter-spacing: 0.5px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .max-btn:hover:not(:disabled) {
@@ -141,6 +148,7 @@
 .btn-send {
     width: 100%;
     padding: 16px 24px;
+    min-height: 52px;
     background: linear-gradient(135deg, var(--color-accent-secondary) 0%, var(--color-accent-success) 100%);
     border: none;
     border-radius: 2px;
@@ -151,6 +159,8 @@
     transition: all 0.3s ease;
     margin-top: 8px;
     box-shadow: 0 4px 14px rgba(129, 178, 154, 0.3);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .btn-send:hover:not(:disabled) {
@@ -265,6 +275,9 @@
     color: var(--color-text);
     font-weight: 600;
     font-size: 15px;
+    word-break: break-all;
+    text-align: right;
+    max-width: 60%;
 }
 
 .confirm-actions {
@@ -275,6 +288,7 @@
 .btn-cancel {
     flex: 1;
     padding: 14px 20px;
+    min-height: 48px;
     background: transparent;
     border: 1px solid var(--color-border);
     border-radius: 2px;
@@ -283,6 +297,8 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .btn-cancel:hover {
@@ -294,6 +310,7 @@
 .btn-confirm {
     flex: 1;
     padding: 14px 20px;
+    min-height: 48px;
     background: linear-gradient(135deg, var(--color-accent-secondary) 0%, var(--color-accent-success) 100%);
     border: none;
     border-radius: 2px;
@@ -303,9 +320,168 @@
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: 0 4px 12px rgba(129, 178, 154, 0.3);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .btn-confirm:hover {
     box-shadow: 0 6px 16px rgba(129, 178, 154, 0.4);
     transform: translateY(-1px);
+}
+
+/* Tablet - 768px */
+@media (max-width: 768px) {
+    .send-card {
+        padding: 20px;
+    }
+
+    .send-card:hover {
+        transform: none;
+    }
+
+    .send-header {
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .send-icon {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        font-size: 16px;
+    }
+
+    .send-header h3 {
+        font-size: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    .confirm-content {
+        padding: 24px;
+    }
+
+    .confirm-icon {
+        font-size: 48px;
+    }
+
+    .confirm-content h4 {
+        font-size: 20px;
+    }
+}
+
+/* Mobile - 480px */
+@media (max-width: 480px) {
+    .send-card {
+        padding: 16px;
+    }
+
+    .send-header {
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+
+    .send-icon {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        font-size: 14px;
+    }
+
+    .send-header h3 {
+        font-size: 14px;
+    }
+
+    .form-group {
+        margin-bottom: 14px;
+    }
+
+    .form-group label {
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+
+    .form-group input {
+        padding: 12px;
+        font-size: 14px;
+        min-height: 44px;
+    }
+
+    .amount-input-wrapper {
+        gap: 6px;
+    }
+
+    .max-btn {
+        min-width: 52px;
+        min-height: 44px;
+        padding: 0 12px;
+        font-size: 11px;
+    }
+
+    .error-text {
+        font-size: 11px;
+    }
+
+    .btn-send {
+        padding: 14px 20px;
+        min-height: 48px;
+        font-size: 14px;
+    }
+
+    .confirm-modal {
+        padding: 16px;
+    }
+
+    .confirm-content {
+        padding: 20px;
+    }
+
+    .confirm-icon {
+        font-size: 40px;
+        margin-bottom: 16px;
+    }
+
+    .confirm-content h4 {
+        font-size: 18px;
+    }
+
+    .confirm-content>p {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .confirm-details {
+        padding: 16px;
+        margin-bottom: 20px;
+    }
+
+    .confirm-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        padding: 8px 0;
+    }
+
+    .confirm-value {
+        text-align: left;
+        max-width: 100%;
+        font-size: 14px;
+    }
+
+    .confirm-label {
+        font-size: 12px;
+    }
+
+    .confirm-actions {
+        gap: 10px;
+    }
+
+    .btn-cancel,
+    .btn-confirm {
+        padding: 12px 16px;
+        min-height: 44px;
+        font-size: 13px;
+    }
 }

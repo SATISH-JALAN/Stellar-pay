@@ -40,6 +40,7 @@
 .balance-icon {
     width: 40px;
     height: 40px;
+    min-width: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -60,14 +61,17 @@
     background: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: 2px;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
     cursor: pointer;
     font-size: 16px;
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .refresh-btn:hover:not(:disabled) {
@@ -156,4 +160,98 @@
 
 .balance-hint a:hover {
     text-decoration: underline;
+}
+
+/* Tablet - 768px */
+@media (max-width: 768px) {
+    .balance-card {
+        padding: 20px;
+    }
+
+    .balance-card:hover {
+        transform: none;
+    }
+
+    .balance-header {
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .balance-icon {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        font-size: 16px;
+    }
+
+    .balance-header h3 {
+        font-size: 15px;
+    }
+
+    .amount {
+        font-size: 42px;
+    }
+
+    .currency {
+        font-size: 16px;
+    }
+}
+
+/* Mobile - 480px */
+@media (max-width: 480px) {
+    .balance-card {
+        padding: 16px;
+    }
+
+    .balance-header {
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+
+    .balance-icon {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        font-size: 14px;
+    }
+
+    .balance-header h3 {
+        font-size: 14px;
+    }
+
+    .refresh-btn {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        font-size: 14px;
+    }
+
+    .balance-loading {
+        padding: 24px;
+    }
+
+    .balance-amount {
+        gap: 8px;
+        padding: 16px 0;
+    }
+
+    .amount {
+        font-size: 36px;
+        letter-spacing: 0;
+    }
+
+    .currency {
+        font-size: 14px;
+    }
+
+    .balance-error {
+        font-size: 13px;
+        padding: 12px;
+    }
+
+    .balance-hint {
+        font-size: 12px;
+        margin-top: 12px;
+        padding-top: 12px;
+    }
 }

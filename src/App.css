@@ -54,19 +54,60 @@
   background-clip: text;
 }
 
-/* Mobile */
-@media (max-width: 520px) {
+/* Tablet - 768px */
+@media (max-width: 768px) {
   .app {
-    padding: 16px;
+    padding: 20px;
+  }
+
+  .main {
+    gap: 14px;
+  }
+
+  .header {
+    padding: 20px 0 12px;
   }
 
   .logo-star {
-    font-size: 28px;
+    font-size: 32px;
   }
 
   .logo-stellar,
   .logo-pay {
-    font-size: 22px;
+    font-size: 26px;
     letter-spacing: 2px;
+  }
+}
+
+/* Mobile - 480px */
+@media (max-width: 480px) {
+  .app {
+    padding: 16px 12px;
+  }
+
+  .main {
+    gap: 12px;
+  }
+
+  .header {
+    padding: 16px 0 10px;
+  }
+
+  .logo {
+    gap: 10px;
+  }
+
+  .logo-star {
+    font-size: 26px;
+  }
+
+  .logo-text {
+    gap: 6px;
+  }
+
+  .logo-stellar,
+  .logo-pay {
+    font-size: 20px;
+    letter-spacing: 1px;
   }
 }

@@ -1,0 +1,154 @@
+.contract-stats-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.contract-stats-card:hover {
+    border-color: var(--color-border-hover);
+}
+
+.contract-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.contract-icon {
+    font-size: 20px;
+}
+
+.contract-header h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text);
+    flex-grow: 1;
+}
+
+.contract-badge {
+    background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-warning));
+    color: #18181f;
+    padding: 3px 10px;
+    border-radius: 2px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.contract-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--color-text-muted);
+}
+
+.stat-value-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stat-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--color-text);
+}
+
+.stat-value.contract-id,
+.stat-value.tx-hash {
+    cursor: pointer;
+    padding: 4px 8px;
+    background: var(--color-bg);
+    border-radius: 2px;
+    transition: background 0.2s;
+}
+
+.stat-value.contract-id:hover,
+.stat-value.tx-hash:hover {
+    background: var(--color-surface-hover);
+}
+
+.stat-value.large {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-accent-secondary);
+}
+
+.stat-item.highlight {
+    padding: 12px;
+    background: rgba(129, 178, 154, 0.08);
+    border-radius: 4px;
+    margin-top: 4px;
+}
+
+.explorer-link {
+    font-size: 14px;
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.explorer-link:hover {
+    opacity: 1;
+}
+
+.contract-functions {
+    padding-top: 12px;
+    border-top: 1px solid var(--color-border);
+}
+
+.functions-label {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.function-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.function-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 4px 8px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    color: var(--color-text-muted);
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .contract-stats-card {
+        padding: 16px;
+    }
+
+    .stat-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .function-list {
+        gap: 4px;
+    }
+}

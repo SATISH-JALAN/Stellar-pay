@@ -13,6 +13,7 @@ import { BalanceChart } from './components/BalanceChart';
 import { PriceDisplay } from './components/PriceDisplay';
 import { FriendbotFund } from './components/FriendbotFund';
 import { TransactionReceipt } from './components/TransactionReceipt';
+import { ContractStats } from './components/ContractStats';
 import { saveRecentRecipient } from './components/RecentRecipients';
 import {
   getBalance,
@@ -208,6 +209,7 @@ function App() {
                 />
                 <BalanceDisplay publicKey={wallet.publicKey} />
                 <FriendbotFund publicKey={wallet.publicKey} onFunded={fetchBalance} />
+                <ContractStats publicKey={wallet.publicKey} />
               </div>
               <div className="dashboard-right">
                 <BalanceChart publicKey={wallet.publicKey} />

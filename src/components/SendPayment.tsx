@@ -33,10 +33,12 @@ export const SendPayment: React.FC<SendPaymentProps> = ({
             newErrors.amount = 'Amount is required';
         } else {
             const amountNum = parseFloat(amount);
+            const balanceNum = parseFloat(balance);
             if (isNaN(amountNum) || amountNum <= 0) {
                 newErrors.amount = 'Amount must be greater than 0';
-            } else if (amountNum > parseFloat(balance)) {
-                newErrors.amount = 'Insufficient balance';
+            } else if (amountNum > balanceNum) {
+                // Enhanced insufficient balance error (Yellow Belt requirement)
+                newErrors.amount = `Insufficient balance. You need ${amountNum.toFixed(2)} XLM but only have ${balanceNum.toFixed(2)} XLM.`;
             }
         }
 

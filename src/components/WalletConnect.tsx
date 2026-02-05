@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { formatPublicKey } from '../utils/stellar';
 import { QRCodeDisplay } from './QRCode';
+import { ErrorDisplay, detectErrorType } from './ErrorDisplay';
 import './WalletConnect.css';
 
 interface WalletOption {
@@ -151,13 +152,11 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({
             </p>
 
             {error && (
-                <div className="error-message">
-                    <span className="error-icon">⚠️</span>
-                    <span>{error}</span>
-                    {onClearError && (
-                        <button className="error-dismiss" onClick={onClearError}>×</button>
-                    )}
-                </div>
+                <ErrorDisplay
+                    message={error}
+                    type={detectErrorType(error)}
+                    onDismiss={onClearError}
+                />
             )}
 
             {/* Wallet Selector */}

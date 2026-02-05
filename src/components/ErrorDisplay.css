@@ -1,0 +1,110 @@
+.error-display {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.error-display-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    flex: 1;
+}
+
+.error-display-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.error-display-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.error-display-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: inherit;
+}
+
+.error-display-message {
+    font-size: 13px;
+    color: inherit;
+    opacity: 0.9;
+}
+
+.error-display-dismiss {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    padding: 0 4px;
+    color: inherit;
+    line-height: 1;
+}
+
+.error-display-dismiss:hover {
+    opacity: 1;
+}
+
+/* Error Type Styles */
+.error-wallet_not_found {
+    background: rgba(212, 114, 106, 0.12);
+    border: 1px solid rgba(212, 114, 106, 0.25);
+    color: var(--color-accent-error);
+}
+
+.error-user_rejected {
+    background: rgba(242, 204, 143, 0.12);
+    border: 1px solid rgba(242, 204, 143, 0.25);
+    color: var(--color-accent-warning);
+}
+
+.error-insufficient_balance {
+    background: rgba(224, 122, 95, 0.12);
+    border: 1px solid rgba(224, 122, 95, 0.25);
+    color: var(--color-accent-primary);
+}
+
+.error-general {
+    background: rgba(212, 114, 106, 0.12);
+    border: 1px solid rgba(212, 114, 106, 0.25);
+    color: var(--color-accent-error);
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .error-display {
+        padding: 12px;
+    }
+
+    .error-display-icon {
+        font-size: 18px;
+    }
+
+    .error-display-title,
+    .error-display-message {
+        font-size: 12px;
+    }
+}

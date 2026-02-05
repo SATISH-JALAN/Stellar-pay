@@ -4,13 +4,25 @@ import { formatPublicKey } from '../utils/stellar';
 import { QRCodeDisplay } from './QRCode';
 import './WalletConnect.css';
 
+interface WalletOption {
+    id: string;
+    name: string;
+    icon: string;
+    description: string;
+}
+
 interface WalletConnectProps {
     publicKey: string | null;
     isConnecting: boolean;
     error: string | null;
     network: string | null;
+    selectedWalletName?: string | null;
+    selectedWalletIcon?: string | null;
+    walletOptions?: WalletOption[];
     onConnect: () => void;
+    onConnectWithWallet?: (walletId: string) => void;
     onDisconnect: () => void;
+    onClearError?: () => void;
 }
 
 export const WalletConnect: React.FC<WalletConnectProps> = ({
@@ -18,12 +30,18 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({
     isConnecting,
     error,
     network,
+    selectedWalletName,
+    selectedWalletIcon,
+    walletOptions = [],
     onConnect,
+    onConnectWithWallet,
     onDisconnect,
+    onClearError,
 }) => {
     const [copied, setCopied] = useState(false);
+    const [showWalletSelector, setShowWalletSelector] = useState(false);
     const cardRef = useRef<HTMLDivElement>(null);
-    const connectBtnRef = useRef<HTMLButtonElement>(null);
+    const selectorRef = useRef<HTMLDivElement>(null);
 
     // Initial animation
     useEffect(() => {
@@ -36,36 +54,16 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({
         }
     }, []);
 
-    // Button hover animation
+    // Animate wallet selector
     useEffect(() => {
-        const btn = connectBtnRef.current;
-        if (!btn) return;
-
-        const handleEnter = () => {
-            gsap.to(btn, { scale: 1.02, duration: 0.2, ease: 'power2.out' });
-        };
-        const handleLeave = () => {
-            gsap.to(btn, { scale: 1, duration: 0.2, ease: 'power2.out' });
-        };
-        const handleDown = () => {
-            gsap.to(btn, { scale: 0.98, duration: 0.1 });
-        };
-        const handleUp = () => {
-            gsap.to(btn, { scale: 1.02, duration: 0.15, ease: 'back.out(2)' });
-        };
-
-        btn.addEventListener('mouseenter', handleEnter);
-        btn.addEventListener('mouseleave', handleLeave);
-        btn.addEventListener('mousedown', handleDown);
-        btn.addEventListener('mouseup', handleUp);
-
-        return () => {
-            btn.removeEventListener('mouseenter', handleEnter);
-            btn.removeEventListener('mouseleave', handleLeave);
-            btn.removeEventListener('mousedown', handleDown);
-            btn.removeEventListener('mouseup', handleUp);
-        };
-    }, [publicKey]);
+        if (selectorRef.current && showWalletSelector) {
+            gsap.fromTo(
+                selectorRef.current,
+                { opacity: 0, y: -10, scale: 0.95 },
+                { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: 'back.out(2)' }
+            );
+        }
+    }, [showWalletSelector]);
 
     const copyAddress = async () => {
         if (!publicKey) return;
@@ -74,7 +72,6 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({
             await navigator.clipboard.writeText(publicKey);
             setCopied(true);
 
-            // Animate the copy feedback
             const toast = document.querySelector('.copied-toast');
             if (toast) {
                 gsap.fromTo(
@@ -90,14 +87,35 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({
         }
     };
 
+    const handleWalletSelect = (walletId: string) => {
+        setShowWalletSelector(false);
+        if (onClearError) onClearError();
+        if (onConnectWithWallet) {
+            onConnectWithWallet(walletId);
+        } else {
+            onConnect();
+        }
+    };
+
+    const toggleWalletSelector = () => {
+        if (onClearError) onClearError();
+        setShowWalletSelector(!showWalletSelector);
+    };
+
+    // Connected state
     if (publicKey) {
         return (
             <div className="wallet-card wallet-connected" ref={cardRef}>
                 <div className="wallet-header">
-                    <span className="wallet-icon">👛</span>
+                    <span className="wallet-icon">{selectedWalletIcon || '👛'}</span>
                     <h3>Wallet Connected</h3>
                     <span className="network-badge">{network}</span>
                 </div>
+                {selectedWalletName && (
+                    <div className="connected-wallet-name">
+                        via {selectedWalletName}
+                    </div>
+                )}
                 <div className="wallet-info">
                     <div className="address-row">
                         <p className="public-key" title={publicKey}>
@@ -121,6 +139,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({
         );
     }
 
+    // Disconnected state with wallet selector
     return (
         <div className="wallet-card" ref={cardRef}>
             <div className="wallet-header">
@@ -128,17 +147,59 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({
                 <h3>Connect Wallet</h3>
             </div>
             <p className="wallet-description">
-                Connect your Freighter wallet to start sending XLM on testnet.
+                Choose a wallet to connect and start sending XLM on testnet.
             </p>
-            {error && <p className="error-message">{error}</p>}
-            <button
-                ref={connectBtnRef}
-                className="btn btn-connect"
-                onClick={onConnect}
-                disabled={isConnecting}
-            >
-                {isConnecting ? 'Connecting...' : 'Connect Freighter'}
-            </button>
+
+            {error && (
+                <div className="error-message">
+                    <span className="error-icon">⚠️</span>
+                    <span>{error}</span>
+                    {onClearError && (
+                        <button className="error-dismiss" onClick={onClearError}>×</button>
+                    )}
+                </div>
+            )}
+
+            {/* Wallet Selector */}
+            {walletOptions.length > 0 ? (
+                <>
+                    <button
+                        className="btn btn-connect wallet-selector-toggle"
+                        onClick={toggleWalletSelector}
+                        disabled={isConnecting}
+                    >
+                        {isConnecting ? 'Connecting...' : 'Select Wallet'}
+                        <span className={`toggle-arrow ${showWalletSelector ? 'open' : ''}`}>▼</span>
+                    </button>
+
+                    {showWalletSelector && (
+                        <div className="wallet-selector" ref={selectorRef}>
+                            {walletOptions.map((wallet) => (
+                                <button
+                                    key={wallet.id}
+                                    className="wallet-option"
+                                    onClick={() => handleWalletSelect(wallet.id)}
+                                    disabled={isConnecting}
+                                >
+                                    <span className="wallet-option-icon">{wallet.icon}</span>
+                                    <div className="wallet-option-info">
+                                        <span className="wallet-option-name">{wallet.name}</span>
+                                        <span className="wallet-option-desc">{wallet.description}</span>
+                                    </div>
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                </>
+            ) : (
+                <button
+                    className="btn btn-connect"
+                    onClick={onConnect}
+                    disabled={isConnecting}
+                >
+                    {isConnecting ? 'Connecting...' : 'Connect Freighter'}
+                </button>
+            )}
         </div>
     );
 };

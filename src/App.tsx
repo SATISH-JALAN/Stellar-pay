@@ -198,8 +198,13 @@ function App() {
                   isConnecting={wallet.isConnecting}
                   error={wallet.error}
                   network={wallet.network}
+                  selectedWalletName={wallet.selectedWalletName}
+                  selectedWalletIcon={wallet.selectedWalletIcon}
+                  walletOptions={wallet.walletOptions}
                   onConnect={wallet.connect}
+                  onConnectWithWallet={wallet.connectWithWallet}
                   onDisconnect={wallet.disconnect}
+                  onClearError={wallet.clearError}
                 />
                 <BalanceDisplay publicKey={wallet.publicKey} />
                 <FriendbotFund publicKey={wallet.publicKey} onFunded={fetchBalance} />
@@ -216,8 +221,13 @@ function App() {
             isConnecting={wallet.isConnecting}
             error={wallet.error}
             network={wallet.network}
+            selectedWalletName={wallet.selectedWalletName}
+            selectedWalletIcon={wallet.selectedWalletIcon}
+            walletOptions={wallet.walletOptions}
             onConnect={wallet.connect}
+            onConnectWithWallet={wallet.connectWithWallet}
             onDisconnect={wallet.disconnect}
+            onClearError={wallet.clearError}
           />
         )}
       </main>

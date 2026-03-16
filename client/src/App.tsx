@@ -14,6 +14,7 @@ import { PriceDisplay } from './components/PriceDisplay';
 import { FriendbotFund } from './components/FriendbotFund';
 import { TransactionReceipt } from './components/TransactionReceipt';
 import { ContractStats } from './components/ContractStats';
+import { LoadingProgress } from './components/LoadingProgress';
 import { saveRecentRecipient } from './components/RecentRecipients';
 import {
   getBalance,
@@ -131,7 +132,7 @@ function App() {
         throw new Error(signResult.error);
       }
 
-      const result = await submitTransaction(signResult.signedTxXdr);
+      const result = await submitTransaction(signResult.signedTxXdr, wallet.publicKey);
       setTxHash(result.hash);
 
       // Don't set txStatus to success - use receipt instead
@@ -168,6 +169,7 @@ function App() {
 
   return (
     <div className="app">
+      <LoadingProgress isLoading={isSending} label="Sending payment..." />
       <ThemeToggle />
 
       <main className="main" ref={mainRef}>

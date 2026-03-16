@@ -1,4 +1,5 @@
 import * as StellarSdk from '@stellar/stellar-sdk';
+import { cache, TTL } from './cache';
 
 // Initialize Horizon server for Testnet
 export const server = new StellarSdk.Horizon.Server(
@@ -8,15 +9,21 @@ export const server = new StellarSdk.Horizon.Server(
 export const NETWORK_PASSPHRASE = StellarSdk.Networks.TESTNET;
 
 /**
- * Fetch XLM balance for a given public key
+ * Fetch XLM balance for a given public key (cached for 15s)
  */
 export const getBalance = async (publicKey: string): Promise<string> => {
+  const cacheKey = `balance:${publicKey}`;
+  const cached = cache.get<string>(cacheKey);
+  if (cached !== null) return cached;
+
   try {
     const account = await server.loadAccount(publicKey);
     const xlmBalance = account.balances.find(
       (b) => b.asset_type === 'native'
     );
-    return xlmBalance?.balance || '0';
+    const balance = xlmBalance?.balance || '0';
+    cache.set(cacheKey, balance, TTL.BALANCE);
+    return balance;
   } catch (error) {
     console.error('Error fetching balance:', error);
     throw error;
@@ -65,15 +72,20 @@ export const createPaymentTransaction = async (
 
 /**
  * Submit a signed transaction to the network
+ * Invalidates balance cache for the source account after submission
  */
 export const submitTransaction = async (
-  signedXDR: string
+  signedXDR: string,
+  sourcePublicKey?: string
 ): Promise<StellarSdk.Horizon.HorizonApi.SubmitTransactionResponse> => {
   const transaction = StellarSdk.TransactionBuilder.fromXDR(
     signedXDR,
     NETWORK_PASSPHRASE
   );
-  return await server.submitTransaction(transaction);
+  const result = await server.submitTransaction(transaction);
+  // Bust balance cache so next fetch is fresh
+  if (sourcePublicKey) cache.invalidate(`balance:${sourcePublicKey}`);
+  return result;
 };
 
 /**

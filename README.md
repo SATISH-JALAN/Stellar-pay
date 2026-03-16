@@ -4,9 +4,54 @@ A modern, feature-rich web application for sending and receiving payments on the
 
 ![Stellar Pay Dashboard](./screenshots/2.png)
 
-## 🟡 Yellow Belt Submission
+## 🟠 Orange Belt Submission
 
-This project fulfills all requirements for the Stellar Quest Yellow Belt Level 2:
+This project fulfills all requirements for the Stellar Quest Orange Belt Level 3:
+
+### ✅ Requirements Met
+- **Mini-dApp Fully Functional** - Complete payment app with smart contract integration
+- **Minimum 3 Tests Passing** - 21 tests across 3 test suites (all passing)
+- **README Complete** - Full documentation with setup, usage, and contract details
+- **Loading States & Progress Indicators** - Top-of-page progress bar + spinners throughout
+- **Basic Caching** - In-memory TTL cache for balance and API calls
+- **3+ Meaningful Commits** - 15+ commits with feature implementations
+
+### 🧪 Tests
+
+Run the test suite:
+```bash
+cd client
+npm test
+```
+
+**Test Suites:**
+| File | Tests | Coverage |
+|------|-------|----------|
+| `stellar.test.ts` | 6 | `isValidPublicKey`, `formatPublicKey` |
+| `errorDisplay.test.ts` | 8 | `detectErrorType` - all 3 error types |
+| `cache.test.ts` | 7 | TTL cache - set, get, expire, invalidate |
+
+### ⚡ Caching
+
+The app uses an in-memory TTL cache to reduce redundant API calls:
+
+| Data | TTL | Cache Key |
+|------|-----|-----------|
+| Account Balance | 15s | `balance:<publicKey>` |
+| Transaction History | 30s | `transactions:<publicKey>` |
+| XLM Price | 60s | `price:XLM` |
+| Contract Stats | 30s | `contract:count` |
+
+Cache is automatically invalidated after a successful payment transaction.
+
+### 🔄 Loading States
+
+- Top-of-page animated progress bar during payment submission
+- Spinner in balance display while fetching
+- Disabled buttons with "Sending..." / "Connecting..." labels
+- Transaction status modal: pending → success / error
+
+This project fulfills all requirements for the Stellar Quest Yellow Belt Level 2 and Orange Belt Level 3:
 
 ### ✅ Requirements Met
 - **Multi-Wallet Integration** - StellarWalletsKit with 4 wallet options (Freighter, xBull, LOBSTR, Albedo)

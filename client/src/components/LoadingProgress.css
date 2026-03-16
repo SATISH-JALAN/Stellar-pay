@@ -1,0 +1,25 @@
+.loading-progress-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.loading-progress-bar {
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-accent-teal), var(--color-accent-primary));
+    border-radius: 0 2px 2px 0;
+    box-shadow: 0 0 8px var(--color-accent-teal);
+    width: 0%;
+}
+
+.loading-progress-label {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 0.7rem;
+    color: var(--color-accent-teal);
+    opacity: 0.8;
+}

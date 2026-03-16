@@ -4,7 +4,7 @@ A modern, feature-rich web application for sending and receiving payments on the
 
 ![Stellar Pay Dashboard](./screenshots/2.png)
 
-## 🟠 Orange Belt Submission
+## 🟠 Orange Belt Submission (Level 3)
 
 This project fulfills all requirements for the Stellar Quest Orange Belt Level 3:
 
@@ -24,7 +24,6 @@ cd client
 npm test
 ```
 
-**Test Suites:**
 | File | Tests | Coverage |
 |------|-------|----------|
 | `stellar.test.ts` | 6 | `isValidPublicKey`, `formatPublicKey` |
@@ -33,7 +32,7 @@ npm test
 
 ### ⚡ Caching
 
-The app uses an in-memory TTL cache to reduce redundant API calls:
+In-memory TTL cache reduces redundant API calls:
 
 | Data | TTL | Cache Key |
 |------|-----|-----------|
@@ -42,7 +41,7 @@ The app uses an in-memory TTL cache to reduce redundant API calls:
 | XLM Price | 60s | `price:XLM` |
 | Contract Stats | 30s | `contract:count` |
 
-Cache is automatically invalidated after a successful payment transaction.
+Cache is automatically invalidated after a successful payment.
 
 ### 🔄 Loading States
 
@@ -51,7 +50,11 @@ Cache is automatically invalidated after a successful payment transaction.
 - Disabled buttons with "Sending..." / "Connecting..." labels
 - Transaction status modal: pending → success / error
 
-This project fulfills all requirements for the Stellar Quest Yellow Belt Level 2 and Orange Belt Level 3:
+---
+
+## 🟡 Yellow Belt Submission (Level 2)
+
+This project fulfills all requirements for the Stellar Quest Yellow Belt Level 2:
 
 ### ✅ Requirements Met
 - **Multi-Wallet Integration** - StellarWalletsKit with 4 wallet options (Freighter, xBull, LOBSTR, Albedo)
@@ -79,8 +82,6 @@ This project fulfills all requirements for the Stellar Quest Yellow Belt Level 2
 
 ### 👛 Supported Wallets
 
-The app supports multiple Stellar wallets through StellarWalletsKit:
-
 | Wallet | Icon | Description |
 |--------|------|-------------|
 | **Freighter** | 🦊 | Most popular Stellar wallet |
@@ -89,6 +90,20 @@ The app supports multiple Stellar wallets through StellarWalletsKit:
 | **Albedo** | 🌟 | Web-based wallet |
 
 ![Wallet Options](./screenshots/wallet-options.png)
+
+### 🚨 Error Handling
+
+Three distinct error types with custom UI:
+1. **Wallet Not Found** 🔌 - Detects when wallet extension is missing
+2. **User Rejected** 🚫 - Handles transaction cancellations gracefully
+3. **Insufficient Balance** 💸 - Validates account balance before transactions
+
+### 📊 Transaction Status Tracking
+- **Pending** - Shows spinner while awaiting wallet signature
+- **Success** - Displays transaction hash with Stellar Expert link
+- **Error** - Shows detailed error message
+
+---
 
 ## ✨ Features
 
@@ -150,30 +165,6 @@ Complete transaction history with search, filter tabs, and "Show More" paginatio
 | **Lenis** | Smooth Scrolling |
 | **Recharts** | Balance Charts |
 | **jsPDF** | PDF Generation |
-
-## 🎯 Yellow Belt Features
-
-### Multi-Wallet Integration
-- Integrated StellarWalletsKit for seamless wallet switching
-- Support for Freighter, xBull, LOBSTR, and Albedo wallets
-- Automatic wallet detection and connection handling
-
-### Error Handling
-Three distinct error types with custom UI:
-1. **Wallet Not Found** 🔌 - Detects when wallet extension is missing
-2. **User Rejected** 🚫 - Handles transaction cancellations gracefully
-3. **Insufficient Balance** 💸 - Validates account balance before transactions
-
-### Smart Contract Integration
-- **Payment Registry Contract** deployed on Soroban testnet
-- Real-time contract state synchronization (auto-refresh every 30s)
-- Contract function calls: `log_payment`, `get_payment_count`
-- Live payment statistics displayed in UI
-
-### Transaction Status Tracking
-- **Pending** - Shows spinner while awaiting wallet signature
-- **Success** - Displays transaction hash with Stellar Expert link
-- **Error** - Shows detailed error message with retry option
 
 ## 🚀 Getting Started
 

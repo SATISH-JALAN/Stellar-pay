@@ -1,8 +1,49 @@
 # 🚀 Stellar Pay
 
-A modern, feature-rich web application for sending and receiving payments on the Stellar blockchain testnet. Built with React, TypeScript, and the Freighter wallet integration.
+A modern, feature-rich web application for sending and receiving payments on the Stellar blockchain testnet. Built with React, TypeScript, and multi-wallet integration using StellarWalletsKit.
 
 ![Stellar Pay Dashboard](./screenshots/2.png)
+
+## 🟡 Yellow Belt Submission
+
+This project fulfills all requirements for the Stellar Quest Yellow Belt Level 2:
+
+### ✅ Requirements Met
+- **Multi-Wallet Integration** - StellarWalletsKit with 4 wallet options (Freighter, xBull, LOBSTR, Albedo)
+- **3 Error Types Handled** - Wallet not found, user rejected, insufficient balance
+- **Smart Contract Deployed** - Payment Registry contract on Stellar testnet
+- **Contract Called from Frontend** - Real-time payment logging and statistics
+- **Transaction Status Tracking** - Pending/Success/Error states with visual feedback
+- **2+ Meaningful Commits** - 15+ commits with feature implementations
+
+### 📜 Deployed Smart Contract
+
+**Contract ID:** `CDXQDRTF2BRCD63QVUBUUDC2DIQHHCDBAPA6P3UD5EVRMRN4O327VERK`
+
+**Deploy Transaction:** `f4e40d4cd4cc41e397c73a584aa97a3ef587e7d0fb6038da4f1b592e19b48fcf`
+
+**View on Stellar Expert:**
+- [Contract Details](https://stellar.expert/explorer/testnet/contract/CDXQDRTF2BRCD63QVUBUUDC2DIQHHCDBAPA6P3UD5EVRMRN4O327VERK)
+- [Deploy Transaction](https://stellar.expert/explorer/testnet/tx/f4e40d4cd4cc41e397c73a584aa97a3ef587e7d0fb6038da4f1b592e19b48fcf)
+
+**Contract Functions:**
+- `log_payment` - Records payment transactions on-chain
+- `get_payment_count` - Returns total logged payments
+- `get_payment` - Retrieves specific payment details
+- `get_recent_payments` - Fetches recent payment history
+
+### 👛 Supported Wallets
+
+The app supports multiple Stellar wallets through StellarWalletsKit:
+
+| Wallet | Icon | Description |
+|--------|------|-------------|
+| **Freighter** | 🦊 | Most popular Stellar wallet |
+| **xBull** | 🐂 | Feature-rich wallet |
+| **LOBSTR** | 🦞 | Mobile-friendly wallet |
+| **Albedo** | 🌟 | Web-based wallet |
+
+![Wallet Options](./screenshots/wallet-options.png)
 
 ## ✨ Features
 
@@ -24,6 +65,11 @@ A modern, feature-rich web application for sending and receiving payments on the
 - **✨ Smooth Animations** - GSAP-powered animations with Lenis smooth scroll
 
 ## 📸 Screenshots
+
+### Multi-Wallet Selection
+Choose from 4 different Stellar wallets with StellarWalletsKit integration.
+
+![Wallet Options](./screenshots/wallet-options.png)
 
 ### Send Payment Interface
 The main dashboard with the Send Payment form, Address Book, and recent recipients.
@@ -53,11 +99,36 @@ Complete transaction history with search, filter tabs, and "Show More" paginatio
 | **TypeScript** | Type Safety |
 | **Vite** | Build Tool |
 | **Stellar SDK** | Blockchain Integration |
-| **Freighter API** | Wallet Connection |
+| **StellarWalletsKit** | Multi-Wallet Support |
+| **Soroban** | Smart Contract Platform |
 | **GSAP** | Animations |
 | **Lenis** | Smooth Scrolling |
 | **Recharts** | Balance Charts |
 | **jsPDF** | PDF Generation |
+
+## 🎯 Yellow Belt Features
+
+### Multi-Wallet Integration
+- Integrated StellarWalletsKit for seamless wallet switching
+- Support for Freighter, xBull, LOBSTR, and Albedo wallets
+- Automatic wallet detection and connection handling
+
+### Error Handling
+Three distinct error types with custom UI:
+1. **Wallet Not Found** 🔌 - Detects when wallet extension is missing
+2. **User Rejected** 🚫 - Handles transaction cancellations gracefully
+3. **Insufficient Balance** 💸 - Validates account balance before transactions
+
+### Smart Contract Integration
+- **Payment Registry Contract** deployed on Soroban testnet
+- Real-time contract state synchronization (auto-refresh every 30s)
+- Contract function calls: `log_payment`, `get_payment_count`
+- Live payment statistics displayed in UI
+
+### Transaction Status Tracking
+- **Pending** - Shows spinner while awaiting wallet signature
+- **Success** - Displays transaction hash with Stellar Expert link
+- **Error** - Shows detailed error message with retry option
 
 ## 🚀 Getting Started
 
@@ -77,6 +148,7 @@ Complete transaction history with search, filter tabs, and "Show More" paginatio
 
 2. **Install dependencies**
    ```bash
+   cd client
    npm install
    ```
 
@@ -100,8 +172,9 @@ npm run preview
 ## 📖 Usage Guide
 
 ### 1. Connect Your Wallet
-- Click "Connect Wallet" button
-- Approve the connection in Freighter popup
+- Click "Select Wallet" button
+- Choose from Freighter, xBull, LOBSTR, or Albedo
+- Approve the connection in your wallet
 - Your wallet address and balance will appear
 
 ### 2. Fund Your Account (Testnet)
@@ -113,8 +186,9 @@ npm run preview
 2. Enter the amount in XLM
 3. Optionally add a memo
 4. Click "Send Payment"
-5. Confirm in Freighter
-6. View your transaction receipt
+5. Confirm in your wallet
+6. Transaction is logged to the smart contract
+7. View your transaction receipt
 
 ### 4. View Transaction History
 - See all your sent and received transactions
@@ -122,31 +196,38 @@ npm run preview
 - Filter by type (All/Sent/Received)
 - Export to PDF for records
 
+### 5. Monitor Contract Stats
+- View total payments logged on-chain
+- See contract ID and deployment transaction
+- Real-time updates every 30 seconds
+- Click links to view on Stellar Expert
+
 ## 🏗️ Project Structure
 
 ```
-src/
+client/src/
 ├── components/          # React components
 │   ├── AddressBook.tsx     # Save frequent addresses
 │   ├── BalanceChart.tsx    # Historical balance chart
 │   ├── BalanceDisplay.tsx  # Current balance display
+│   ├── ContractStats.tsx   # Smart contract statistics
+│   ├── ErrorDisplay.tsx    # Error handling UI (3 types)
 │   ├── FriendbotFund.tsx   # Testnet faucet
-│   ├── Logo.tsx            # Animated logo
-│   ├── PriceDisplay.tsx    # XLM price ticker
 │   ├── QRCode.tsx          # QR code generator
 │   ├── RecentRecipients.tsx # Recent addresses
 │   ├── SendPayment.tsx     # Payment form
 │   ├── ThemeToggle.tsx     # Dark/light mode
 │   ├── TransactionHistory.tsx # Tx list
 │   ├── TransactionReceipt.tsx # PDF receipt
-│   ├── TransactionStatus.tsx  # Status modal
-│   └── WalletConnect.tsx   # Wallet connection
+│   ├── TransactionStatus.tsx  # Status modal (pending/success/error)
+│   └── WalletConnect.tsx   # Multi-wallet connection
 ├── hooks/
 │   └── useWallet.ts        # Wallet state management
 ├── utils/
-│   └── stellar.ts          # Stellar SDK helpers
+│   ├── soroban.ts          # Smart contract interactions
+│   ├── stellar.ts          # Stellar SDK helpers
+│   └── walletKit.ts        # StellarWalletsKit setup
 ├── App.tsx                 # Main application
-├── App.css                 # Global styles
 └── main.tsx               # Entry point
 ```
 
@@ -161,7 +242,24 @@ src/
 
 The app is configured to use:
 - **Horizon Server**: `https://horizon-testnet.stellar.org`
+- **Soroban RPC**: `https://soroban-testnet.stellar.org`
 - **Network Passphrase**: `Test SDF Network ; September 2015`
+
+## 🧪 Testing the Smart Contract
+
+You can verify the contract deployment and interactions:
+
+1. **View Contract on Stellar Expert:**
+   - [Contract Details](https://stellar.expert/explorer/testnet/contract/CDXQDRTF2BRCD63QVUBUUDC2DIQHHCDBAPA6P3UD5EVRMRN4O327VERK)
+
+2. **View Deploy Transaction:**
+   - [Deploy TX](https://stellar.expert/explorer/testnet/tx/f4e40d4cd4cc41e397c73a584aa97a3ef587e7d0fb6038da4f1b592e19b48fcf)
+
+3. **Test Contract Functions:**
+   - Connect your wallet in the app
+   - Send a payment to log it on-chain
+   - View the payment count increase in the Contract Stats card
+   - Check transaction status in real-time
 
 ## 📄 License
 

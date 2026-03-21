@@ -152,3 +152,154 @@
         gap: 4px;
     }
 }
+
+/* Recent Payments */
+.recent-payments-toggle {
+    width: 100%;
+    margin: 12px 0 0;
+    padding: 8px 12px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    color: var(--color-text-muted);
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.recent-payments-toggle:hover:not(:disabled) {
+    border-color: var(--color-accent-secondary);
+    color: var(--color-text);
+}
+
+.recent-payments-toggle:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.recent-badge {
+    margin-left: auto;
+    background: var(--color-accent-secondary);
+    color: #18181f;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+
+.recent-payments {
+    margin-top: 8px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.recent-loading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    font-size: 12px;
+    color: var(--color-text-muted);
+}
+
+.spinner-small {
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-accent-secondary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.recent-empty {
+    padding: 12px;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-align: center;
+    margin: 0;
+}
+
+.recent-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.recent-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 11px;
+}
+
+.recent-item:last-child {
+    border-bottom: none;
+}
+
+.recent-addresses {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Space Mono', monospace;
+}
+
+.recent-from {
+    color: var(--color-accent-primary);
+}
+
+.recent-arrow {
+    color: var(--color-text-muted);
+}
+
+.recent-to {
+    color: var(--color-accent-secondary);
+}
+
+.recent-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.recent-amount {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.recent-time {
+    color: var(--color-text-muted);
+    font-size: 10px;
+}
+
+.refresh-recent-btn {
+    width: 100%;
+    padding: 6px;
+    background: transparent;
+    border: none;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: 11px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.refresh-recent-btn:hover:not(:disabled) {
+    background: var(--color-surface-hover);
+}
+
+.function-tag.active {
+    border-color: var(--color-accent-secondary);
+    color: var(--color-accent-secondary);
+}

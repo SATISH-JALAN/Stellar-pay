@@ -1,12 +1,31 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
-import { 
-  getWalletKit, 
-  WALLET_OPTIONS, 
+import { useState, useCallback, useEffect, useRef } from "react";
+import {
+  getWalletKit,
+  WALLET_OPTIONS,
   getWalletName,
   getWalletIcon,
-  FREIGHTER_ID 
-} from '../utils/walletKit';
-import type { StellarWalletsKit } from '@creit.tech/stellar-wallets-kit';
+  FREIGHTER_ID,
+} from "../utils/walletKit";
+import type { StellarWalletsKit } from "@creit.tech/stellar-wallets-kit";
+
+const extractErrorMessage = (error: unknown): string => {
+  if (error instanceof Error) {
+    const cause = (error as { cause?: unknown }).cause;
+    if (cause instanceof Error && cause.message) {
+      return `${error.message}. ${cause.message}`;
+    }
+    return error.message;
+  }
+
+  if (typeof error === "object" && error !== null) {
+    const maybeMessage = (error as { message?: unknown }).message;
+    if (typeof maybeMessage === "string" && maybeMessage.length > 0) {
+      return maybeMessage;
+    }
+  }
+
+  return "Failed to connect wallet";
+};
 
 interface WalletState {
   publicKey: string | null;
@@ -24,7 +43,7 @@ export const useWallet = () => {
     publicKey: null,
     isConnecting: false,
     error: null,
-    network: 'TESTNET',
+    network: "TESTNET",
     selectedWalletId: null,
     selectedWalletName: null,
     selectedWalletIcon: null,
@@ -38,11 +57,15 @@ export const useWallet = () => {
   // Auto-reconnect on mount if previously connected
   useEffect(() => {
     const checkExistingConnection = async () => {
-      const savedWalletId = localStorage.getItem('stellar_wallet_id');
-      const savedPublicKey = localStorage.getItem('stellar_public_key');
-      
+      const savedWalletId = localStorage.getItem("stellar_wallet_id");
+      const savedPublicKey = localStorage.getItem("stellar_public_key");
+
       if (savedWalletId && savedPublicKey) {
-        setState(prev => ({
+        const kit = kitRef.current ?? getWalletKit();
+        kitRef.current = kit;
+        kit.setWallet(savedWalletId);
+
+        setState((prev) => ({
           ...prev,
           publicKey: savedPublicKey,
           selectedWalletId: savedWalletId,
@@ -57,63 +80,82 @@ export const useWallet = () => {
 
   // Connect with a specific wallet
   const connectWithWallet = useCallback(async (walletId: string) => {
-    const kit = kitRef.current;
-    if (!kit) {
-      setState(prev => ({ 
-        ...prev, 
-        error: 'Wallet kit not initialized. Please refresh the page.' 
-      }));
-      return;
-    }
+    const kit = kitRef.current ?? getWalletKit();
+    kitRef.current = kit;
 
-    setState(prev => ({ ...prev, isConnecting: true, error: null }));
+    setState((prev) => ({ ...prev, isConnecting: true, error: null }));
 
     try {
+      const supportedWallets = await kit.getSupportedWallets();
+      const selected = supportedWallets.find(
+        (wallet) => wallet.id === walletId,
+      );
+      if (selected && !selected.isAvailable) {
+        throw new Error(
+          `${getWalletName(walletId)} wallet is not installed or available in this browser.`,
+        );
+      }
+
       // Set the selected wallet
       kit.setWallet(walletId);
 
       // Get the address - this will trigger the wallet connection modal
-      const { address } = await kit.getAddress();
+      const { address } =
+        walletId === FREIGHTER_ID
+          ? await kit.getAddress({ skipRequestAccess: false })
+          : await kit.getAddress();
 
       if (!address) {
-        throw new Error('No address returned from wallet');
+        throw new Error("No address returned from wallet");
       }
 
       // Save to localStorage for auto-reconnect
-      localStorage.setItem('stellar_wallet_id', walletId);
-      localStorage.setItem('stellar_public_key', address);
+      localStorage.setItem("stellar_wallet_id", walletId);
+      localStorage.setItem("stellar_public_key", address);
 
       setState({
         publicKey: address,
         isConnecting: false,
         error: null,
-        network: 'TESTNET',
+        network: "TESTNET",
         selectedWalletId: walletId,
         selectedWalletName: getWalletName(walletId),
         selectedWalletIcon: getWalletIcon(walletId),
       });
     } catch (error) {
       // Enhanced error handling
-      let errorMessage = 'Failed to connect wallet';
-      
-      if (error instanceof Error) {
-        const msg = error.message.toLowerCase();
-        
+      let errorMessage = "Failed to connect wallet";
+      const rawMessage = extractErrorMessage(error);
+
+      if (rawMessage) {
+        const msg = rawMessage.toLowerCase();
+
         // Wallet not found/installed
-        if (msg.includes('not installed') || msg.includes('not found') || msg.includes('no wallet')) {
+        if (
+          msg.includes("not installed") ||
+          msg.includes("not found") ||
+          msg.includes("no wallet") ||
+          msg.includes("not available")
+        ) {
           errorMessage = `${getWalletName(walletId)} wallet is not installed. Please install it first.`;
         }
         // User rejected
-        else if (msg.includes('rejected') || msg.includes('cancelled') || msg.includes('denied') || msg.includes('user refused')) {
-          errorMessage = 'Connection cancelled. Please approve the request in your wallet.';
+        else if (
+          msg.includes("rejected") ||
+          msg.includes("cancelled") ||
+          msg.includes("denied") ||
+          msg.includes("user refused")
+        ) {
+          errorMessage =
+            "Connection cancelled. Please approve the request in your wallet.";
         }
         // Other errors
         else {
-          errorMessage = error.message;
+          errorMessage = rawMessage;
         }
       }
 
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         isConnecting: false,
         error: errorMessage,
@@ -127,9 +169,9 @@ export const useWallet = () => {
   }, [connectWithWallet]);
 
   const disconnect = useCallback(() => {
-    localStorage.removeItem('stellar_wallet_id');
-    localStorage.removeItem('stellar_public_key');
-    
+    localStorage.removeItem("stellar_wallet_id");
+    localStorage.removeItem("stellar_public_key");
+
     setState({
       publicKey: null,
       isConnecting: false,
@@ -142,7 +184,7 @@ export const useWallet = () => {
   }, []);
 
   const clearError = useCallback(() => {
-    setState(prev => ({ ...prev, error: null }));
+    setState((prev) => ({ ...prev, error: null }));
   }, []);
 
   return {

@@ -1,5 +1,4 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { signTransaction } from '@stellar/freighter-api';
 import { gsap } from 'gsap';
 import Lenis from 'lenis';
 import { useWallet } from './hooks/useWallet';
@@ -124,15 +123,22 @@ function App() {
 
     try {
       const xdr = await createPaymentTransaction(wallet.publicKey, destination, amount);
-      const signResult = await signTransaction(xdr, {
-        networkPassphrase: NETWORK_PASSPHRASE,
-      });
-
-      if (signResult.error) {
-        throw new Error(signResult.error);
+      if (!wallet.kit) {
+        throw new Error('Wallet kit not initialized. Reconnect your wallet and try again.');
       }
 
-      const result = await submitTransaction(signResult.signedTxXdr, wallet.publicKey);
+      const signResult = await wallet.kit.signTransaction(xdr, {
+        networkPassphrase: NETWORK_PASSPHRASE,
+        address: wallet.publicKey,
+      });
+
+      const signedXdr = signResult?.signedTxXdr;
+
+      if (!signedXdr) {
+        throw new Error('Wallet did not return a signed transaction XDR. Please approve and try again.');
+      }
+
+      const result = await submitTransaction(signedXdr, wallet.publicKey);
       setTxHash(result.hash);
 
       // Don't set txStatus to success - use receipt instead

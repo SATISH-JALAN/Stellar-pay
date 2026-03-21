@@ -221,7 +221,7 @@ function App() {
               </div>
               <div className="dashboard-right">
                 <BalanceChart publicKey={wallet.publicKey} />
-                <TransactionHistory publicKey={wallet.publicKey} />
+                <TransactionHistory publicKey={wallet.publicKey} latestTxHash={txHash} />
               </div>
             </div>
           </>

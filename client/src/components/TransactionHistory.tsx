@@ -14,11 +14,30 @@ interface Transaction {
 
 interface TransactionHistoryProps {
     publicKey: string;
+    latestTxHash?: string;
 }
 
 const HORIZON_URL = 'https://horizon-testnet.stellar.org';
 
-export const TransactionHistory = ({ publicKey }: TransactionHistoryProps) => {
+const PAYMENT_RECORD_TYPES = new Set([
+    'payment',
+    'path_payment_strict_send',
+    'path_payment_strict_receive',
+]);
+
+const parseAmount = (record: any): string => {
+    const rawAmount = record.amount ?? record.destination_amount ?? record.source_amount ?? '0';
+    const amount = Number.parseFloat(String(rawAmount));
+    return Number.isFinite(amount) ? amount.toFixed(2) : '0.00';
+};
+
+const parseAsset = (record: any): string => {
+    const assetType = record.asset_type ?? record.destination_asset_type ?? record.source_asset_type;
+    const assetCode = record.asset_code ?? record.destination_asset_code ?? record.source_asset_code;
+    return assetType === 'native' ? 'XLM' : (assetCode || 'ASSET');
+};
+
+export const TransactionHistory = ({ publicKey, latestTxHash }: TransactionHistoryProps) => {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
     const [filteredTxs, setFilteredTxs] = useState<Transaction[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -51,12 +70,12 @@ export const TransactionHistory = ({ publicKey }: TransactionHistoryProps) => {
             const records = data._embedded?.records || [];
 
             const txs: Transaction[] = records
-                .filter((record: any) => record.type === 'payment')
+                .filter((record: any) => PAYMENT_RECORD_TYPES.has(record.type))
                 .map((record: any) => ({
                     id: record.id,
                     type: record.from === publicKey ? 'sent' : 'received',
-                    amount: parseFloat(record.amount).toFixed(2),
-                    asset: record.asset_type === 'native' ? 'XLM' : record.asset_code,
+                    amount: parseAmount(record),
+                    asset: parseAsset(record),
                     counterparty: record.from === publicKey ? record.to : record.from,
                     date: new Date(record.created_at),
                     hash: record.transaction_hash,
@@ -75,6 +94,17 @@ export const TransactionHistory = ({ publicKey }: TransactionHistoryProps) => {
     useEffect(() => {
         fetchTransactions();
     }, [fetchTransactions]);
+
+    useEffect(() => {
+        if (!latestTxHash) return;
+
+        // Horizon indexing may lag briefly after submission.
+        const timer = window.setTimeout(() => {
+            fetchTransactions();
+        }, 2500);
+
+        return () => window.clearTimeout(timer);
+    }, [latestTxHash, fetchTransactions]);
 
     // Filter transactions
     useEffect(() => {

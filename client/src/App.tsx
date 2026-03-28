@@ -16,7 +16,7 @@ import { TransactionReceipt } from './components/TransactionReceipt';
 import { ContractStats } from './components/ContractStats';
 import { LoadingProgress } from './components/LoadingProgress';
 import { LivePaymentToast } from './components/LivePaymentToast';
-import { saveRecentRecipient } from './components/RecentRecipients';
+import { saveRecentRecipient } from './utils/recentRecipients';
 import {
   getBalance,
   createPaymentTransaction,

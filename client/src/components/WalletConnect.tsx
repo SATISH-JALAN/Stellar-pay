@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { formatPublicKey } from '../utils/stellar';
 import { QRCodeDisplay } from './QRCode';
-import { ErrorDisplay, detectErrorType } from './ErrorDisplay';
+import { ErrorDisplay } from './ErrorDisplay';
+import { detectErrorType } from '../utils/detectErrorType';
 import './WalletConnect.css';
 
 interface WalletOption {

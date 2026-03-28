@@ -2,9 +2,6 @@ import React from 'react';
 import { type ErrorType } from '../utils/detectErrorType';
 import './ErrorDisplay.css';
 
-export type { ErrorType } from '../utils/detectErrorType';
-export { detectErrorType } from '../utils/detectErrorType';
-
 interface ErrorDisplayProps {
     message: string;
     type?: ErrorType;

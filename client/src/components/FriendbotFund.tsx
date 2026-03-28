@@ -55,7 +55,7 @@ export const FriendbotFund = ({ publicKey, onFunded }: FriendbotFundProps) => {
             if (showCustomAddress) {
                 setCustomAddress('');
             }
-        } catch (_err) {
+        } catch {
             setStatus('error');
             setMessage('Account may already be funded or rate limited. Try again later.');
         } finally {

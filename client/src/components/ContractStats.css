@@ -303,3 +303,9 @@
     border-color: var(--color-accent-secondary);
     color: var(--color-accent-secondary);
 }
+
+.recent-balance {
+    color: var(--color-accent-warning);
+    font-size: 10px;
+    font-style: italic;
+}

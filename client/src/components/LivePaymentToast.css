@@ -1,0 +1,101 @@
+.live-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    max-width: 300px;
+    overflow: hidden;
+}
+
+.live-toast-received {
+    border-color: var(--color-accent-secondary);
+    box-shadow: 0 8px 32px rgba(129, 178, 154, 0.2);
+}
+
+.live-toast-sent {
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 8px 32px rgba(224, 122, 95, 0.2);
+}
+
+.live-toast-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.live-toast-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+}
+
+.live-toast-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.live-toast-detail {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.live-toast-received .live-toast-title {
+    color: var(--color-accent-secondary);
+}
+
+.live-toast-sent .live-toast-title {
+    color: var(--color-accent-primary);
+}
+
+/* Pulse dot indicating live */
+.live-toast-pulse {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-accent-secondary);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.live-toast-sent .live-toast-pulse {
+    background: var(--color-accent-primary);
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.4;
+        transform: scale(0.8);
+    }
+}
+
+@media (max-width: 480px) {
+    .live-toast {
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
+        max-width: none;
+    }
+}

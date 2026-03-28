@@ -4,7 +4,56 @@ A modern, feature-rich web application for sending and receiving payments on the
 
 ![Stellar Pay Dashboard](./screenshots/2.png)
 
-## 🟠 Orange Belt Submission (Level 3)
+## � Green Belt Submission (Level 4)
+
+[![CI](https://github.com/SATISH-JALAN/Stellar-pay/actions/workflows/ci.yml/badge.svg)](https://github.com/SATISH-JALAN/Stellar-pay/actions/workflows/ci.yml)
+
+This project fulfills all requirements for the Stellar Quest Green Belt Level 4:
+
+### ✅ Requirements Met
+- **Inter-Contract Call** - Payment Registry calls the Stellar Asset Contract (SAC) to read sender's XLM balance on-chain during `log_payment`
+- **CI/CD Running** - GitHub Actions runs lint + tests + build on every push
+- **Mobile Responsive** - Full responsive design across all screen sizes (375px → 1200px+)
+- **8+ Meaningful Commits** - 15+ commits covering all features
+- **Advanced Event Streaming** - Real-time payment notifications via Horizon SSE stream
+
+### 🔄 CI/CD Pipeline
+
+GitHub Actions workflow at `.github/workflows/ci.yml`:
+- Runs on every push to `main`
+- Jobs: Install → Lint → Test (21 tests) → Build
+- Vercel auto-deploys on merge to `main` (CD)
+
+### ⛓️ Inter-Contract Call
+
+The upgraded `PaymentRegistry` contract calls the **Stellar Asset Contract (SAC)** for native XLM during `log_payment`:
+
+```rust
+// Inter-contract call to native XLM SAC
+let token_client = token::Client::new(&env, &native_token_id);
+let from_balance = token_client.balance(&from); // reads sender's balance on-chain
+```
+
+This means every logged payment also records the sender's XLM balance at that moment - verifiable on-chain without trusting the frontend.
+
+### 📡 Real-Time Event Streaming
+
+Horizon SSE stream (`useEventStream` hook) subscribes to the connected wallet's payment stream. When a payment arrives or confirms:
+- A live toast notification pops up bottom-right
+- Shows direction (received/sent), amount, and counterparty
+- Balance auto-refreshes on incoming payments
+- No polling - true push-based real-time updates
+
+### 📱 Mobile Responsive
+
+Full responsive layout from 375px to 1200px+:
+- Dashboard grid collapses to single column on tablet
+- All cards, forms, and modals optimized for touch
+- Minimum tap target size 44px throughout
+
+![Mobile View](./screenshots/mobile.png)
+
+---
 
 This project fulfills all requirements for the Stellar Quest Orange Belt Level 3:
 
@@ -69,21 +118,22 @@ This project fulfills all requirements for the Stellar Quest Yellow Belt Level 2
 
 ### 📜 Deployed Smart Contract
 
-**Contract ID:** `CAIORM4STQRH5V7N6IGHGTEGWG2QNIK7GIZ5GL6WLMNEH73PHJY4YPSC`
+**Contract ID:** `CBVJZXZVMIFJNZMD63BIJWMLXJQD4M42ZZCE2QIIZ5S5D5ITDAB4QUID`
 
-**Deploy Transaction:** `c85528509f0934f0711d288146df4e776c4bd5df582d352fd5a52d39fc8dabf3`
+**Deploy Transaction:** `268c3c108c719dc0c06c8f71c7d774fbbfe415fd3cba47ff664ea530c6b8cff3`
 
 **View on Stellar Expert:**
 
-- [Contract Details](https://stellar.expert/explorer/testnet/contract/CAIORM4STQRH5V7N6IGHGTEGWG2QNIK7GIZ5GL6WLMNEH73PHJY4YPSC)
-- [Deploy Transaction](https://stellar.expert/explorer/testnet/tx/c85528509f0934f0711d288146df4e776c4bd5df582d352fd5a52d39fc8dabf3)
+- [Contract Details](https://stellar.expert/explorer/testnet/contract/CBVJZXZVMIFJNZMD63BIJWMLXJQD4M42ZZCE2QIIZ5S5D5ITDAB4QUID)
+- [Deploy Transaction](https://stellar.expert/explorer/testnet/tx/268c3c108c719dc0c06c8f71c7d774fbbfe415fd3cba47ff664ea530c6b8cff3)
 
 **Contract Functions:**
 
-- `log_payment` - Records payment transactions on-chain
+- `log_payment` - Records payment + inter-contract call to SAC for sender balance
 - `get_payment_count` - Returns total logged payments
 - `get_payment` - Retrieves specific payment details
 - `get_recent_payments` - Fetches recent payment history
+- `get_wallet_balance` - Queries XLM balance via SAC inter-contract call
 
 ### 👛 Supported Wallets
 
@@ -300,7 +350,7 @@ The app is configured to use:
 You can verify the contract deployment and interactions:
 
 1. **View Contract on Stellar Expert:**
-   - [Contract Details](https://stellar.expert/explorer/testnet/contract/CAIORM4STQRH5V7N6IGHGTEGWG2QNIK7GIZ5GL6WLMNEH73PHJY4YPSC)
+   - [Contract Details](https://stellar.expert/explorer/testnet/contract/CBVJZXZVMIFJNZMD63BIJWMLXJQD4M42ZZCE2QIIZ5S5D5ITDAB4QUID)
 
 2. **View Deploy Transaction:**
    - [Deploy TX](https://stellar.expert/explorer/testnet/tx/c85528509f0934f0711d288146df4e776c4bd5df582d352fd5a52d39fc8dabf3)

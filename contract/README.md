@@ -4,10 +4,10 @@ A Soroban smart contract deployed on Stellar testnet that logs and tracks XLM pa
 
 ## Deployed Contract
 
-- **Contract ID:** `CAIORM4STQRH5V7N6IGHGTEGWG2QNIK7GIZ5GL6WLMNEH73PHJY4YPSC`
+- **Contract ID:** `CBVJZXZVMIFJNZMD63BIJWMLXJQD4M42ZZCE2QIIZ5S5D5ITDAB4QUID`
 - **Network:** Stellar Testnet
-- **Deploy TX:** `c85528509f0934f0711d288146df4e776c4bd5df582d352fd5a52d39fc8dabf3`
-- **Explorer:** [View on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CAIORM4STQRH5V7N6IGHGTEGWG2QNIK7GIZ5GL6WLMNEH73PHJY4YPSC)
+- **Deploy TX:** `268c3c108c719dc0c06c8f71c7d774fbbfe415fd3cba47ff664ea530c6b8cff3`
+- **Explorer:** [View on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CBVJZXZVMIFJNZMD63BIJWMLXJQD4M42ZZCE2QIIZ5S5D5ITDAB4QUID)
 
 ## Contract Functions
 
@@ -64,7 +64,7 @@ stellar contract deploy \
 
 # 4. Invoke a function (example)
 stellar contract invoke \
-  --id CAIORM4STQRH5V7N6IGHGTEGWG2QNIK7GIZ5GL6WLMNEH73PHJY4YPSC \
+  --id CBVJZXZVMIFJNZMD63BIJWMLXJQD4M42ZZCE2QIIZ5S5D5ITDAB4QUID \
   --source deployer \
   --network testnet \
   -- get_payment_count

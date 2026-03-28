@@ -138,6 +138,11 @@ export const ContractStats: React.FC<ContractStatsProps> = ({ publicKey }) => {
                                     </div>
                                     <div className="recent-meta">
                                         <span className="recent-amount">{parseFloat(p.amount).toFixed(2)} XLM</span>
+                                        {p.fromBalance && (
+                                            <span className="recent-balance" title="Sender balance at time of payment">
+                                                bal: {p.fromBalance} XLM
+                                            </span>
+                                        )}
                                         <span className="recent-time">{formatTime(p.timestamp)}</span>
                                     </div>
                                 </div>

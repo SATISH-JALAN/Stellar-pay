@@ -15,9 +15,9 @@ import { Server, Api, assembleTransaction } from "@stellar/stellar-sdk/rpc";
 
 // Contract deployed on testnet
 export const PAYMENT_REGISTRY_CONTRACT =
-  "CAIORM4STQRH5V7N6IGHGTEGWG2QNIK7GIZ5GL6WLMNEH73PHJY4YPSC";
+  "CBVJZXZVMIFJNZMD63BIJWMLXJQD4M42ZZCE2QIIZ5S5D5ITDAB4QUID";
 export const DEPLOY_TX_HASH =
-  "c85528509f0934f0711d288146df4e776c4bd5df582d352fd5a52d39fc8dabf3";
+  "268c3c108c719dc0c06c8f71c7d774fbbfe415fd3cba47ff664ea530c6b8cff3";
 
 const SOROBAN_RPC_URL = "https://soroban-testnet.stellar.org";
 const NETWORK_PASSPHRASE = Networks.TESTNET;
@@ -30,6 +30,7 @@ export interface OnChainPayment {
   to: string;
   amount: string; // in XLM
   timestamp: number;
+  fromBalance?: string; // sender's XLM balance at time of logging (inter-contract call result)
 }
 
 /** Simulate a read-only contract call and return the raw ScVal result */
@@ -78,6 +79,9 @@ function parsePayment(scVal: xdr.ScVal): OnChainPayment | null {
       to: String(native.to),
       amount: (Number(native.amount) / 10_000_000).toFixed(7),
       timestamp: Number(native.timestamp),
+      fromBalance: native.from_balance !== undefined
+        ? (Number(native.from_balance) / 10_000_000).toFixed(2)
+        : undefined,
     };
   } catch {
     return null;

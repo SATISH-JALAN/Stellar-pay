@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import Lenis from 'lenis';
 import { useWallet } from './hooks/useWallet';
+import { useEventStream, type LivePayment } from './hooks/useEventStream';
 import { WalletConnect } from './components/WalletConnect';
 import { BalanceDisplay } from './components/BalanceDisplay';
 import { SendPayment } from './components/SendPayment';
@@ -14,6 +15,7 @@ import { FriendbotFund } from './components/FriendbotFund';
 import { TransactionReceipt } from './components/TransactionReceipt';
 import { ContractStats } from './components/ContractStats';
 import { LoadingProgress } from './components/LoadingProgress';
+import { LivePaymentToast } from './components/LivePaymentToast';
 import { saveRecentRecipient } from './components/RecentRecipients';
 import {
   getBalance,
@@ -38,6 +40,19 @@ function App() {
     status: 'success' | 'error';
   } | null>(null);
   const [showReceipt, setShowReceipt] = useState(false);
+
+  // Live payment toast state
+  const [livePayment, setLivePayment] = useState<LivePayment | null>(null);
+
+  // Real-time event stream
+  useEventStream({
+    publicKey: wallet.publicKey,
+    onPayment: (payment) => {
+      setLivePayment(payment);
+      // Refresh balance when a payment arrives
+      if (payment.type === 'received') fetchBalance();
+    },
+  });
 
   const mainRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
@@ -256,6 +271,11 @@ function App() {
         isOpen={showReceipt}
         onClose={() => setShowReceipt(false)}
         transaction={lastTxDetails}
+      />
+
+      <LivePaymentToast
+        payment={livePayment}
+        onDismiss={() => setLivePayment(null)}
       />
     </div>
   );

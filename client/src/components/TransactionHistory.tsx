@@ -25,13 +25,31 @@ const PAYMENT_RECORD_TYPES = new Set([
     'path_payment_strict_receive',
 ]);
 
-const parseAmount = (record: any): string => {
+interface HorizonPaymentRecord {
+    id: string;
+    type: string;
+    amount?: string;
+    destination_amount?: string;
+    source_amount?: string;
+    asset_type?: string;
+    asset_code?: string;
+    destination_asset_type?: string;
+    destination_asset_code?: string;
+    source_asset_type?: string;
+    source_asset_code?: string;
+    from: string;
+    to: string;
+    created_at: string;
+    transaction_hash: string;
+}
+
+const parseAmount = (record: HorizonPaymentRecord): string => {
     const rawAmount = record.amount ?? record.destination_amount ?? record.source_amount ?? '0';
     const amount = Number.parseFloat(String(rawAmount));
     return Number.isFinite(amount) ? amount.toFixed(2) : '0.00';
 };
 
-const parseAsset = (record: any): string => {
+const parseAsset = (record: HorizonPaymentRecord): string => {
     const assetType = record.asset_type ?? record.destination_asset_type ?? record.source_asset_type;
     const assetCode = record.asset_code ?? record.destination_asset_code ?? record.source_asset_code;
     return assetType === 'native' ? 'XLM' : (assetCode || 'ASSET');
@@ -70,8 +88,8 @@ export const TransactionHistory = ({ publicKey, latestTxHash }: TransactionHisto
             const records = data._embedded?.records || [];
 
             const txs: Transaction[] = records
-                .filter((record: any) => PAYMENT_RECORD_TYPES.has(record.type))
-                .map((record: any) => ({
+                .filter((record: HorizonPaymentRecord) => PAYMENT_RECORD_TYPES.has(record.type))
+                .map((record: HorizonPaymentRecord) => ({
                     id: record.id,
                     type: record.from === publicKey ? 'sent' : 'received',
                     amount: parseAmount(record),

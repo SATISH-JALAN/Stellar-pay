@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { detectErrorType } from '../components/ErrorDisplay';
+import { detectErrorType } from '../utils/detectErrorType';
 
 describe('detectErrorType', () => {
   it('detects wallet_not_found when message includes "not installed"', () => {

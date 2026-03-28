@@ -40,7 +40,7 @@ export const BalanceChart = ({ publicKey }: BalanceChartProps) => {
             const accountRes = await fetch(`${HORIZON_URL}/accounts/${publicKey}`);
             const accountData = await accountRes.json();
             const currentBalance = parseFloat(
-                accountData.balances?.find((b: any) => b.asset_type === 'native')?.balance || '0'
+                accountData.balances?.find((b: { asset_type: string; balance: string }) => b.asset_type === 'native')?.balance || '0'
             );
 
             // Build balance history from payments
@@ -102,7 +102,7 @@ export const BalanceChart = ({ publicKey }: BalanceChartProps) => {
         fetchBalanceHistory();
     }, [fetchBalanceHistory]);
 
-    const CustomTooltip = ({ active, payload }: any) => {
+    const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Array<{ value: number; payload: { date: string } }> }) => {
         if (active && payload && payload.length) {
             return (
                 <div className="chart-tooltip">

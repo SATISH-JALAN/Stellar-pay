@@ -64,7 +64,7 @@ export const ContractStats: React.FC<ContractStatsProps> = ({ publicKey }) => {
     }, [showRecent, fetchRecentPayments]);
 
     const copyToClipboard = async (text: string) => {
-        try { await navigator.clipboard.writeText(text); } catch { }
+        try { await navigator.clipboard.writeText(text); } catch (e) { console.error(e); }
     };
 
     return (

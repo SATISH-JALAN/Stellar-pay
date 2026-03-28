@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { gsap } from 'gsap';
 import './AddressBook.css';
 
@@ -15,24 +15,22 @@ interface AddressBookProps {
 const STORAGE_KEY = 'stellar-pay-address-book';
 
 export const AddressBook = ({ onSelectAddress }: AddressBookProps) => {
-    const [contacts, setContacts] = useState<Contact[]>([]);
+    const [contacts, setContacts] = useState<Contact[]>(() => {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+            try {
+                return JSON.parse(stored) as Contact[];
+            } catch (e) {
+                console.error('Failed to load address book:', e);
+            }
+        }
+        return [];
+    });
     const [isOpen, setIsOpen] = useState(false);
     const [isAdding, setIsAdding] = useState(false);
     const [newNickname, setNewNickname] = useState('');
     const [newAddress, setNewAddress] = useState('');
     const [error, setError] = useState('');
-
-    // Load contacts from localStorage
-    useEffect(() => {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored) {
-            try {
-                setContacts(JSON.parse(stored));
-            } catch (e) {
-                console.error('Failed to load address book:', e);
-            }
-        }
-    }, []);
 
     // Save contacts to localStorage
     const saveContacts = (newContacts: Contact[]) => {

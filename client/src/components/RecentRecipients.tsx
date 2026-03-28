@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import './RecentRecipients.css';
 
 interface Recipient {
@@ -13,24 +12,22 @@ interface RecentRecipientsProps {
 
 const STORAGE_KEY = 'stellar-pay-recent-recipients';
 
-export const RecentRecipients = ({ onSelectAddress }: RecentRecipientsProps) => {
-    const [recipients, setRecipients] = useState<Recipient[]>([]);
-
-    useEffect(() => {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored) {
-            try {
-                const data = JSON.parse(stored);
-                // Sort by most recent and limit to 5
-                const sorted = data
-                    .sort((a: Recipient, b: Recipient) => b.lastSent - a.lastSent)
-                    .slice(0, 5);
-                setRecipients(sorted);
-            } catch (e) {
-                console.error('Failed to load recent recipients:', e);
-            }
+function loadRecipients(): Recipient[] {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+        try {
+            return (JSON.parse(stored) as Recipient[])
+                .sort((a, b) => b.lastSent - a.lastSent)
+                .slice(0, 5);
+        } catch (e) {
+            console.error('Failed to load recent recipients:', e);
         }
-    }, []);
+    }
+    return [];
+}
+
+export const RecentRecipients = ({ onSelectAddress }: RecentRecipientsProps) => {
+    const recipients = loadRecipients();
 
     const formatAddress = (address: string) => {
         return `${address.slice(0, 6)}...${address.slice(-6)}`;

@@ -2,8 +2,6 @@
 
 A modern, feature-rich web application for sending and receiving payments on the Stellar blockchain testnet. Built with React, TypeScript, and multi-wallet integration using StellarWalletsKit.
 
-![Stellar Pay Dashboard](./screenshots/2.png)
-
 ## � Green Belt Submission (Level 4)
 
 [![CI](https://github.com/SATISH-JALAN/Stellar-pay/actions/workflows/ci.yml/badge.svg)](https://github.com/SATISH-JALAN/Stellar-pay/actions/workflows/ci.yml)
@@ -51,7 +49,7 @@ Full responsive layout from 375px to 1200px+:
 - All cards, forms, and modals optimized for touch
 - Minimum tap target size 44px throughout
 
-![Mobile View](./screenshots/mobile.png)
+![Mobile View](./client/public/mobile.png)
 
 ---
 
